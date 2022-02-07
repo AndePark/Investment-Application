@@ -22,49 +22,17 @@ public class Invest {
         this.numberShares = (amountFunded / listedPrice);
         this.balance = amountFunded;
         profit = 0;
-        soldReturn = 0;
+        soldReturn = 0.0;
     }
 
-    //REQUIRES: percentage <= 100 && percentage > 0
-    //EFFECTS: the given percentage of shares will be sold at the given current price, number of shares is now remainder
-    // after selling and updated profit is returned
-    public double sell(double currentPrice, int percentage) {
-        this.soldReturn += (numberShares * (percentage / 100) * currentPrice);
+
+    public void sell(double currentPrice, double percentage) {
+        soldReturn += ((numberShares * (percentage / 100)) * currentPrice);
         numberShares -= (numberShares * (percentage / 100));
         balance = (numberShares * listedPrice) + soldReturn;
         profit = balance - amountFunded;
-        return profit;
     }
 
-    public double totalBalance() {
-        this.balance =
-    }
-
-
-
-    public double profit() {
-        profit = balance - amountFunded;
-        return profit;
-    }
-
-
-    //EFFECTS: all shares sold at given current price, number of shares is now 0 and updated profit is returned
-    public double sellAll(double currentPrice) {
-        profit = (numberShares * currentPrice) - balance;
-        balance = 0;
-        numberShares = 0;
-        return profit;
-    }
-
-    //EFFECTS: half of total shares is sold at given current price, number of shares is now half the original
-    // and updated profit is returned
-    public double sellHalf(double currentPrice) {
-        this.soldReturn = ((numberShares / 2) * currentPrice) + soldReturn;
-        numberShares = numberShares / 2;
-        balance = (numberShares * listedPrice) + soldReturn;
-        profit = balance - amountFunded;
-        return profit;
-    }
 
     public String getName() {
         return name;

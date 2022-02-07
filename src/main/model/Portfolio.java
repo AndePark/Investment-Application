@@ -13,6 +13,10 @@ public class Portfolio {
         investments.add(invest);
     }
 
+    public void sellInvestment(Invest invest) {
+        investments.
+    }
+
     public ArrayList<Invest> getInvestments() {
         return investments;
     }
