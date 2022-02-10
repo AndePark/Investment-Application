@@ -103,7 +103,7 @@ public class InvestmentApp {
 }
 
     // i want to print out the listedprice (when we purchased it), the amount of shares im currently holding
-}
+
 /*
 
     private void sellInvest() {
