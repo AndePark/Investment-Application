@@ -5,16 +5,17 @@ public class Invest {
 
     private String name;
     private double amountFunded;
-    //private String date;
     private double listedPrice;
     private double numberShares;
     private double profit;
     private double balance;
-    private double soldReturn;
+    private double realizedGains;
 
 
     //REQUIRES: name has a non-zero length
-    //EFFECTS: constructs an investment with given name, zero amount funded and no profits
+    //EFFECTS: constructs an investment with given name, given amount funded, given listed price per share
+    //         the total number of shares purchased, the balance in the investment, zero profit and
+    //         zero realized gains (money back from selling x amount of shares)
     public Invest(String name, double listedPrice, double amountFunded) {
         this.name = name;
         this.amountFunded = amountFunded;
@@ -22,14 +23,17 @@ public class Invest {
         this.numberShares = (amountFunded / listedPrice);
         this.balance = amountFunded;
         profit = 0;
-        soldReturn = 0.0;
+        realizedGains = 0.0;
     }
 
-
+    //REQUIRES: currentPrice > 0 && percentage <= 100 && percentage > 0
+    //MODIFIES: this
+    //EFFECTS: sell given percentage of investment at given current price/share. Deduct number of shares
+    //         sold from total number of shares. Update the balance and profit.
     public void sell(double currentPrice, double percentage) {
-        soldReturn += ((numberShares * (percentage / 100)) * currentPrice);
+        realizedGains += ((numberShares * (percentage / 100)) * currentPrice);
         numberShares -= (numberShares * (percentage / 100));
-        balance = (numberShares * listedPrice) + soldReturn;
+        balance = (numberShares * listedPrice) + realizedGains;
         profit = balance - amountFunded;
     }
 
@@ -54,8 +58,8 @@ public class Invest {
         return profit;
     }
 
-    public double getSoldReturn() {
-        return soldReturn;
+    public double getRealizedGains() {
+        return realizedGains;
     }
     public double getBalance() {
         return balance;

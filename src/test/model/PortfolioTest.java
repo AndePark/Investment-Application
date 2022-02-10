@@ -1,4 +1,4 @@
-package model;
+/*package model;
 
 
 import org.junit.jupiter.api.BeforeEach;
@@ -6,8 +6,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 public class PortfolioTest {
-    private Portfolio testPortfolio;
+    private Portfolio testPortfolio; // test hashmap
+    private Investment testInvestment;
 
     private Invest invest1;
     private Invest invest2;
@@ -39,3 +41,4 @@ public class PortfolioTest {
         assertEquals(invest2, testPortfolio.getInvestments().get(1));
     }
 }
+*/

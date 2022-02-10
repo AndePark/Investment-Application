@@ -1,15 +1,20 @@
 package ui;
 
 import model.Invest;
+import model.Portfolio;
 
 
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Set;
 
 
 //Investment application
 public class InvestmentApp {
-    private Invest sell;
-    private Invest buy;
+    private Portfolio tickers;
+    // private Portfolio sell;
+    // private Portfolio buy;
+    private ArrayList<Invest> investments;
     private Scanner input;
 
     public InvestmentApp() {
@@ -38,40 +43,68 @@ public class InvestmentApp {
 
     private void processCommand(String command) {
         if (command.equals("v")) {
-            viewInvestments();
-        } else if (command.equals("t")) {
-            makeTransaction();
+            viewTickers();
+        } else if (command.equals("b")) {
+            buyInvestment();
+        } else if (command.equals("s")) {
+            sellInvestment();
         } else {
             System.out.println("Invalid Submission");
         }
     }
 
     private void init() {
-
+        tickers = new Portfolio();
         input = new Scanner(System.in);
         input.useDelimiter("\n");
     }
+
     private void displayMenu() {
         System.out.println("\nSelect from:");
-        System.out.println("\tv -> View Portfolio");
-        System.out.println("\tt -> Make A Transaction (Sell/Buy)");
+        System.out.println("\tv -> View Tickers in Portfolio");
+        System.out.println("\tb -> Buy");
+        System.out.println("\ts -> Sell");
         System.out.println("\tq -> quit");
     }
 
 
-
-    private void makeTransaction() {
-        Invest chosen = chosenInvest();
-        if (chosen.equals(sell)) {
-            sellInvest();
-        } else {
-            buyInvest();
+    private void viewTickers() {
+        Set<String> keys = tickers.keySet();
+        for (String k : keys) {
+            System.out.println(k);
         }
     }
 
-    private void viewInvestments() {
-        //stub
+    private void buyInvestment() {
+        System.out.println("Enter Stock Ticker: ");
+        String name = input.next();
+        System.out.println("Enter Listed Price/Share: $ ");
+        double listedPrice = input.nextDouble();
+        System.out.println("Enter Amount Funded: $ ");
+        double amountFunded = input.nextDouble();
+
+        if (listedPrice > 0.0 && amountFunded > 0.0) {
+            tickers.addToPortfolio(name, listedPrice, amountFunded);
+        } else {
+            System.out.println("Invalid Entry");
+        }
     }
+
+    private void sellInvestment() {
+        System.out.println("Enter Stock Ticker: ");
+        String name = input.next();
+        investments = tickers.getInvestments(name);
+
+        for (Invest i : investments) {
+            System.out.println(i.getNumberShares() + i.getListPrice());
+            // i need to add a number here so that user can choose
+        }
+    }
+}
+
+    // i want to print out the listedprice (when we purchased it), the amount of shares im currently holding
+}
+/*
 
     private void sellInvest() {
         Invest chosen = chosenInvest();
@@ -104,20 +137,25 @@ public class InvestmentApp {
         }
     }
 
-    private Invest chosenInvest() {
-        String selected = "";
+    private Portfolio selectProcess() {
+        String selection = "";  // force entry into loop
 
-        while (!(selected.equals("s") || selected.equals("b"))) {
-            System.out.println("s for selling");
-            System.out.println("b for buying");
-            selected = input.next();
-            selected = selected.toLowerCase();
+        while (!(selection.equals("b") || selection.equals("s") || selection.equals("v"))) {
+            System.out.println("c for chequing");
+            System.out.println("s for savings");
+            selection = input.next();
+            selection = selection.toLowerCase();
         }
-        if (selected.equals("s")) {
-            return sell;
+
+        if (selection.equals("c")) {
+            return cheq;
         } else {
-            return buy;
+            return sav;
         }
     }
 
+
+    }
+
 }
+*/

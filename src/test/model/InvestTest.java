@@ -22,7 +22,7 @@ public class InvestTest {
         assertEquals(5000.00, invest1.getAmountFunded());
         assertEquals(5000.00/1000.00, invest1.getNumberShares());
         assertEquals(0, invest1.getProfit());
-        assertEquals(0, invest1.getSoldReturn());
+        assertEquals(0, invest1.getRealizedGains());
     }
 
     @Test
@@ -36,12 +36,12 @@ public class InvestTest {
     @Test
     void testSell() {
         invest1.sell(500.00,50);
-        assertEquals(1250.0, invest1.getSoldReturn());
+        assertEquals(1250.0, invest1.getRealizedGains());
         assertEquals(2.5, invest1.getNumberShares());
         assertEquals(3750,invest1.getBalance());
         assertEquals(-1250, invest1.getProfit());
         invest1.sell(5000, 10);
-        assertEquals(2500,invest1.getSoldReturn());
+        assertEquals(2500,invest1.getRealizedGains());
         assertEquals(2.25, invest1.getNumberShares());
         assertEquals(4750, invest1.getBalance());
         assertEquals(-250, invest1.getProfit());
