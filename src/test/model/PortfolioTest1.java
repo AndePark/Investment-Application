@@ -32,6 +32,7 @@ public class PortfolioTest1 {
         assertEquals(1, portfolio1.getSize());
         assertTrue(portfolio1.containsKey("Tesla"));
         assertFalse(portfolio1.containsKey("Apple"));
+        // check price, amountfunded and stuff not the arraylist
         //assertEquals(); // I want to test that the Arraylist now contains an Invest with given param
 
     }

@@ -12,9 +12,6 @@ import java.util.Set;
 //Investment application
 public class InvestmentApp {
     private Portfolio tickers;
-    // private Portfolio sell;
-    // private Portfolio buy;
-    private ArrayList<Invest> investments;
     private Scanner input;
 
     public InvestmentApp() {
@@ -93,12 +90,31 @@ public class InvestmentApp {
     private void sellInvestment() {
         System.out.println("Enter Stock Ticker: ");
         String name = input.next();
+        ArrayList<Invest> investments;
         investments = tickers.getInvestments(name);
 
-        for (Invest i : investments) {
-            System.out.println(i.getNumberShares() + i.getListPrice());
-            // i need to add a number here so that user can choose
+        for (int i = 0; i < investments.size(); i++) {
+            System.out.println("Index:" + i);
+            System.out.println("Number of Shares Holding:" + investments.get(i).getNumberShares());
+            System.out.println("Purchased At:" +  investments.get(i).getListPrice() + "$/share" + "\n");
         }
+        System.out.println("Enter Index Number:  ");
+        int index = input.nextInt();
+        System.out.println("Enter Current Price/Share: $ ");
+        double currentPrice = input.nextDouble();
+        System.out.println("Enter Percentage of Shares to Be Sold: % ");
+        double percentage = input.nextDouble();
+        tickers.sellInvestInPortfolio(name, currentPrice, percentage, index);
+        System.out.println("Realized Gains: " + investments.get(index).getRealizedGains());
+        System.out.println("Number Of Shares Remaining: " + investments.get(index).getNumberShares());
+        System.out.println("Balance In Investment: " + investments.get(index).getBalance());
+        System.out.println("Profit Gain/Loss: " + investments.get(index).getProfit());
+
+
+        //for (Invest i : investments) {
+          //  System.out.println(i.getNumberShares() + i.getListPrice());
+            // i need to add a number here so that user can choose
+       // }
     }
 }
 
