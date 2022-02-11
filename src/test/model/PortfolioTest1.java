@@ -4,21 +4,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+
 
 public class PortfolioTest1 {
     private Portfolio portfolio1;
-    private Invest invest1;
-   // private HashMap<String, ArrayList<Invest>> portfolio1;
-
 
 
     @BeforeEach
     void runBefore() {
         portfolio1 = new Portfolio();
-
-
     }
 
     @Test

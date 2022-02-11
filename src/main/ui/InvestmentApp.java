@@ -65,6 +65,7 @@ public class InvestmentApp {
     }
 
 
+    //EFFECTS: displays all purchased stock tickers in portfolio
     private void viewTickers() {
         Set<String> keys = tickers.keySet();
         for (String k : keys) {
@@ -72,6 +73,9 @@ public class InvestmentApp {
         }
     }
 
+
+    //MODIFIES: this
+    //EFFECTS: conducts a purchase of investment
     private void buyInvestment() {
         System.out.println("Enter Stock Ticker: ");
         String name = input.next();
@@ -87,6 +91,9 @@ public class InvestmentApp {
         }
     }
 
+
+    //MODIFIES:this, Invest
+    //EFFECTS: conducts a sell of an investment
     private void sellInvestment() {
         System.out.println("Enter Stock Ticker: ");
         String name = input.next();
@@ -104,74 +111,16 @@ public class InvestmentApp {
         double currentPrice = input.nextDouble();
         System.out.println("Enter Percentage of Shares to Be Sold: % ");
         double percentage = input.nextDouble();
-        tickers.sellInvestInPortfolio(name, currentPrice, percentage, index);
-        System.out.println("Realized Gains: " + investments.get(index).getRealizedGains());
-        System.out.println("Number Of Shares Remaining: " + investments.get(index).getNumberShares());
-        System.out.println("Balance In Investment: " + investments.get(index).getBalance());
-        System.out.println("Profit Gain/Loss: " + investments.get(index).getProfit());
 
+        if (index < investments.size() && currentPrice > 0 && percentage > 0 && percentage <= 100) {
+            tickers.sellInvestInPortfolio(name, currentPrice, percentage, index);
+            System.out.println("Realized Gains: " + investments.get(index).getRealizedGains());
+            System.out.println("Number Of Shares Remaining: " + investments.get(index).getNumberShares());
+            //System.out.println("Balance In Investment: " + investments.get(index).getBalance());
+            System.out.println("Profit Gain/Loss: " + investments.get(index).getProfit());
+        } else {
+            System.out.println("Investment Cannot be Sold, 1 or More Fields Entered Incorrectly");
+        }
 
-        //for (Invest i : investments) {
-          //  System.out.println(i.getNumberShares() + i.getListPrice());
-            // i need to add a number here so that user can choose
-       // }
     }
 }
-
-    // i want to print out the listedprice (when we purchased it), the amount of shares im currently holding
-
-/*
-
-    private void sellInvest() {
-        Invest chosen = chosenInvest();
-        System.out.println("Enter Name of Investment You Wish to Sell: ");
-        string name = input.next();
-        System.out.println("Enter Today's Price/Share: $");
-        double currentPrice = input.nextDouble();
-        System.out.println("Enter Percentage of Shares to Sell: %");
-        double percentage = input.nextDouble();
-
-        if (currentPrice >= 0.0 && percentage <= 100 && percentage > 0) {
-            chosen.sell(currentPrice, percentage);
-        } else {
-            System.out.println("Cannot Process Transaction");
-        }
-    }
-    private void buyInvest() {
-        Invest chosen = chosenInvest();
-        System.out.println("Enter Name/Ticker");
-        System.out.println("Enter Today's Price/Share: $");
-        System.out.println("Enter Invested Amount: $");
-        String name = input.next();
-        double listedPrice = input.nextDouble();
-        double amount = input.nextDouble();
-
-        if (amount > 0 && listedPrice > 0) {
-            chosen = new Invest(name, listedPrice, amount);
-        } else {
-            System.out.println("Cannot Process Transaction");
-        }
-    }
-
-    private Portfolio selectProcess() {
-        String selection = "";  // force entry into loop
-
-        while (!(selection.equals("b") || selection.equals("s") || selection.equals("v"))) {
-            System.out.println("c for chequing");
-            System.out.println("s for savings");
-            selection = input.next();
-            selection = selection.toLowerCase();
-        }
-
-        if (selection.equals("c")) {
-            return cheq;
-        } else {
-            return sav;
-        }
-    }
-
-
-    }
-
-}
-*/
