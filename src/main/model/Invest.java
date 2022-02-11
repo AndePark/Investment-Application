@@ -22,7 +22,7 @@ public class Invest {
         this.listedPrice = listedPrice;
         this.numberShares = (amountFunded / listedPrice);
         this.balance = amountFunded;
-        profit = 0;
+        profit = 0.0;
         realizedGains = 0.0;
     }
 
