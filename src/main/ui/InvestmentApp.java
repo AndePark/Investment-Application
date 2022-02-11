@@ -45,16 +45,22 @@ public class InvestmentApp {
     // MODIFIES: this
     // EFFECTS: processes user command
     private void processCommand(String command) {
-        if (command.equals("v")) {
-            viewTickers();
-        } else if (command.equals("t")) {
-            viewByTicker();
-        } else if (command.equals("b")) {
-            buyInvestment();
-        } else if (command.equals("s")) {
-            sellInvestment();
-        } else {
-            System.out.println("Invalid Submission");
+        switch (command) {
+            case "v":
+                viewTickers();
+                break;
+            case "t":
+                viewByTicker();
+                break;
+            case "b":
+                buyInvestment();
+                break;
+            case "s":
+                sellInvestment();
+                break;
+            default:
+                System.out.println("Invalid Submission");
+                break;
         }
     }
 

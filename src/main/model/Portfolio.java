@@ -28,7 +28,7 @@ public class Portfolio {
             investments = portfolio.get(name);
             investments.add(new Invest(name, listedPrice, amountFunded));
         } else {
-            investments = new ArrayList<Invest>();
+            investments = new ArrayList<>();
             investments.add(new Invest(name, listedPrice, amountFunded));
             portfolio.put(name, investments);
         }
