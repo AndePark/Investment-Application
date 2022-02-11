@@ -13,7 +13,6 @@ public class Portfolio {
     //         for that specific stock ticker
     public Portfolio() {
         portfolio = new HashMap<>();
-
     }
 
     //REQUIRES: listedPrice > 0.0 && amountFunded > 0.0
@@ -46,7 +45,11 @@ public class Portfolio {
         return portfolio.get(name);
     }
 
+    public Invest getInvest(int index) {
+        return investments.get(index);
+    }
 
+    // arraylist now contains the invest
 
     public Set<String> keySet() {
         return portfolio.keySet();

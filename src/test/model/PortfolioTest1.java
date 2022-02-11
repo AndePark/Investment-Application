@@ -2,12 +2,16 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
 
 public class PortfolioTest1 {
     private Portfolio portfolio1;
+    //
 
 
     @BeforeEach
@@ -18,11 +22,16 @@ public class PortfolioTest1 {
     @Test
     void testConstructor() {
         assertEquals(0, portfolio1.getSize());
-        //assertNotNull(portfolio1.getInvestments());
+        assertTrue(portfolio1.isEmpty());
+        assertNotNull(portfolio1.keySet());
     }
+
     @Test
     void testAddToPortfolioNoKey() {
+
         portfolio1.addToPortfolio("Tesla", 30.00, 500.00);
+
+
         assertEquals(1, portfolio1.getSize());
         assertTrue(portfolio1.containsKey("Tesla"));
         assertFalse(portfolio1.containsKey("Apple"));
@@ -39,13 +48,26 @@ public class PortfolioTest1 {
 
     @Test
     void testAddToPortfolioWithKey() {
-        portfolio1.addToPortfolio("Tesla", 30.00, 500.00);
         portfolio1.addToPortfolio("Apple", 20.00, 2000.00);
+        ArrayList<Invest> investments;
+        investments = portfolio1.getInvestments("Apple");
+        assertEquals(investments, portfolio1.getInvestments("Apple"));
+
         portfolio1.addToPortfolio("Apple", 30.00, 6000.00);
+        assertEquals(investments, portfolio1.getInvestments("Apple"));
+    }
+
+    /*
         assertTrue(portfolio1.containsKey("Tesla"));
         assertTrue(portfolio1.containsKey("Apple"));
+
         assertEquals(2, portfolio1.getInvestments("Apple").size());
         assertEquals(1, portfolio1.getInvestments("Tesla").size());
+
+        // how do i check that the arraylist has the invest object added to it since I think thats why i cant cover
+        // my if statements
+
+
         assertEquals("Tesla", portfolio1.getInvestments("Tesla").get(0).getName());
         assertEquals(500, portfolio1.getInvestments("Tesla").get(0).getAmountFunded());
         assertEquals(30.00, portfolio1.getInvestments("Tesla").get(0).getListPrice());
@@ -75,6 +97,8 @@ public class PortfolioTest1 {
 
 
     }
+
+     */
 
     @Test
     void testSellInvestInPortfolio() {
