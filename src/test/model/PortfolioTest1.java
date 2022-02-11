@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PortfolioTest1 {
     private Portfolio portfolio1;
-    //
+
 
 
     @BeforeEach
@@ -24,6 +24,8 @@ public class PortfolioTest1 {
         assertEquals(0, portfolio1.getSize());
         assertTrue(portfolio1.isEmpty());
         assertNotNull(portfolio1.keySet());
+        assertFalse(portfolio1.containsKey("Tesla"));
+        assertFalse(portfolio1.containsKey("Apple"));
     }
 
     @Test
@@ -36,6 +38,7 @@ public class PortfolioTest1 {
         assertTrue(portfolio1.containsKey("Tesla"));
         assertFalse(portfolio1.containsKey("Apple"));
         assertNotNull(portfolio1.getInvestments("Tesla"));
+
 
 
         // check price, amountfunded and stuff not the arraylist
