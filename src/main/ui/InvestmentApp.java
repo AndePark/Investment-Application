@@ -79,7 +79,7 @@ public class InvestmentApp {
     // EFFECTS: displays menu of options to user
     private void displayMenu() {
         System.out.println("\nSelect from:");
-        System.out.println("\tv -> View Portfolio");
+        System.out.println("\tv -> View Tickers");
         System.out.println("\tt -> View Portfolio by Ticker");
         System.out.println("\tb -> Buy");
         System.out.println("\ts -> Sell");
