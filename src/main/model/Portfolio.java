@@ -45,9 +45,7 @@ public class Portfolio {
         return portfolio.get(name);
     }
 
-    public Invest getInvest(int index) {
-        return investments.get(index);
-    }
+
 
     // arraylist now contains the invest
 

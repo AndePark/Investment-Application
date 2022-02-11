@@ -52,6 +52,14 @@ public class PortfolioTest1 {
         ArrayList<Invest> investments;
         investments = portfolio1.getInvestments("Apple");
         assertEquals(investments, portfolio1.getInvestments("Apple"));
+        assertEquals("Apple", portfolio1.getInvestments("Apple").get(0).getName());
+        assertEquals(2000.00, portfolio1.getInvestments("Apple").get(0).getAmountFunded());
+        assertEquals(20.00, portfolio1.getInvestments("Apple").get(0).getListPrice());
+        assertEquals(2000.00/20.00, portfolio1.getInvestments("Apple").get(0).getNumberShares());
+        assertEquals(2000.00, portfolio1.getInvestments("Apple").get(0).getBalance());
+        assertEquals(0.0, portfolio1.getInvestments("Apple").get(0).getProfit());
+        assertEquals(0.0, portfolio1.getInvestments("Apple").get(0).getRealizedGains());
+
 
         portfolio1.addToPortfolio("Apple", 30.00, 6000.00);
         assertEquals(investments, portfolio1.getInvestments("Apple"));
