@@ -5,14 +5,13 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
 
-public class PortfolioTest1 {
+public class PortfolioTest {
     private Portfolio portfolio1;
-
-
 
     @BeforeEach
     void runBefore() {
@@ -26,12 +25,16 @@ public class PortfolioTest1 {
         assertNotNull(portfolio1.keySet());
         assertFalse(portfolio1.containsKey("Tesla"));
         assertFalse(portfolio1.containsKey("Apple"));
+
     }
+
 
     @Test
     void testAddToPortfolioNoKey() {
-
         portfolio1.addToPortfolio("Tesla", 30.00, 500.00);
+       // ArrayList<Invest> investments = new ArrayList<>();
+        //assertEquals(investments.get(0), portfolio1.getInvestments("Tesla").get(0));
+
 
 
         assertEquals(1, portfolio1.getSize());

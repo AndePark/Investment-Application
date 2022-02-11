@@ -33,10 +33,6 @@ finds it difficult to stay organized (like myself), this application helps with 
 - As a user, I want to be able to select the investment that I want to sell 
 - As a user, I want to be able to select a portion of my investments to sell 
 - As a user, I want to be able to view stock tickers in my current portfolio 
-- 
-- investments in my portfolio 
-- As a user, I want to be able to sell shares in my investments 
-- As a user, I want to be able to rate my investments from a scale of 1 to 5 
-
+- As a user, I want to be able to view information of all my investments for a given stock ticker in my portfolio 
 
 

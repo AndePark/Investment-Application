@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
+// Represents an investment portfolio having stock ticker name associated to list of investments for that specific
+// stock
 public class Portfolio {
     private ArrayList<Invest> investments;
     private HashMap<String, ArrayList<Invest>> portfolio;
@@ -42,6 +44,7 @@ public class Portfolio {
     }
 
     public ArrayList<Invest> getInvestments(String name) {
+        //return investments;
         return portfolio.get(name);
     }
 

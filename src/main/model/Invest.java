@@ -1,8 +1,9 @@
 package model;
 
+
+// Represents an investment having stock ticker name, listed price, amount funded, number of shares,
+// profits, balance and realized gains (all in dollars)
 public class Invest {
-
-
     private String name;
     private double amountFunded;
     private double listedPrice;
