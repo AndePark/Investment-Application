@@ -19,10 +19,11 @@ public class Portfolio {
 
     //REQUIRES: listedPrice > 0.0 && amountFunded > 0.0
     //MODIFIES: this
-    //EFFECTS: if given stock ticker name is in portfolio, add a new Invest with given name, listedPrice
-    //         and amountFunded to the Investments list associated to that name. Otherwise, a new portfolio
-    //         name is created with given stock ticker name, and a new Invest with given string name, listedPrice and
-    //         amountFunded is added to the new Investment list associated to the new portfolio name.
+    //EFFECTS: if given stock ticker name is in portfolio, add a new Invest with given name, listed price/share
+    //         and amount funded to the Investments list associated to that name. Otherwise, a new portfolio
+    //         name is created with given stock ticker name, and a new Invest with given string name,
+    //         listed price/share and amountFunded is added to the new Investment list associated to the new
+    //         portfolio name.
     public void addToPortfolio(String name, double listedPrice, double amountFunded) {
         if (portfolio.containsKey(name)) {
             investments = portfolio.get(name);
@@ -37,7 +38,7 @@ public class Portfolio {
     //REQUIRES: name must be in Portfolio && index must be associated to an investment in the list
     //MODIFIES: this, Invest
     //EFFECTS: chosen investment (via index) in the list of investments associated with given stock ticker name is sold
-    //         at given currentPrice and given percentage of shares the user wants to sell.
+    //         at given current price/share and given percentage of shares the user wants to sell.
     public void sellInvestInPortfolio(String name, double currentPrice, double percentage, int index) {
         investments = portfolio.get(name);
         investments.get(index).sell(currentPrice, percentage);
