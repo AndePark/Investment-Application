@@ -43,28 +43,30 @@ public class Portfolio {
         investments.get(index).sell(currentPrice, percentage);
     }
 
+    //REQUIRES: stock ticker name must be in portfolio
+    //EFFECTS: returns the list of investments for the given stock ticker name
     public ArrayList<Invest> getInvestments(String name) {
-        //return investments;
         return portfolio.get(name);
     }
 
 
-
-    // arraylist now contains the invest
-
+    //EFFECTS: returns a set of all stock ticker names in portfolio
     public Set<String> keySet() {
         return portfolio.keySet();
     }
 
-    //returns size of hashmap
+    //EFFECTS: returns the size of portfolio (based off number of stock tickers in portfolio)
     public int getSize() {
         return portfolio.size();
     }
 
+    //EFFECTS: returns true if portfolio is empty. Otherwise, false.
     public boolean isEmpty() {
         return portfolio.isEmpty();
     }
 
+
+    //EFFECTS: returns true if stock ticker name is associated with list of investments. Otherwise, false.
     public boolean containsKey(String name) {
         return portfolio.containsKey(name);
     }
