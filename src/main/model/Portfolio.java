@@ -8,7 +8,6 @@ import java.util.Set;
 // Represents an investment portfolio having stock ticker name associated to list of investments for that specific
 // stock
 public class Portfolio {
-    private ArrayList<Invest> investments;
     private HashMap<String, ArrayList<Invest>> portfolio;
 
     //EFFECTS: constructs an investment portfolio with stock ticker names each associated to list of investments made
@@ -26,10 +25,9 @@ public class Portfolio {
     //         portfolio name.
     public void addToPortfolio(String name, double listedPrice, double amountFunded) {
         if (portfolio.containsKey(name)) {
-            investments = portfolio.get(name);
-            investments.add(new Invest(name, listedPrice, amountFunded));
+            portfolio.get(name).add(new Invest(name, listedPrice, amountFunded));
         } else {
-            investments = new ArrayList<>();
+            ArrayList<Invest> investments = new ArrayList<>();
             investments.add(new Invest(name, listedPrice, amountFunded));
             portfolio.put(name, investments);
         }
@@ -40,8 +38,7 @@ public class Portfolio {
     //EFFECTS: chosen investment (via index) in the list of investments associated with given stock ticker name is sold
     //         at given current price/share and given percentage of shares the user wants to sell.
     public void sellInvestInPortfolio(String name, double currentPrice, double percentage, int index) {
-        investments = portfolio.get(name);
-        investments.get(index).sell(currentPrice, percentage);
+        portfolio.get(name).get(index).sell(currentPrice, percentage);
     }
 
     //REQUIRES: stock ticker name must be in portfolio

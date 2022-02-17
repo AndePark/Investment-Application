@@ -16,7 +16,7 @@ import java.util.Set;
 
 //Investment application
 public class InvestmentApp {
-    private Portfolio tickers;
+    private Portfolio portfolio;
     private Scanner input;
 
     //EFFECTS: runs the investment application
@@ -71,7 +71,7 @@ public class InvestmentApp {
     // MODIFIES: this
     // EFFECTS: initializes portfolio
     private void init() {
-        tickers = new Portfolio();
+        portfolio = new Portfolio();
         input = new Scanner(System.in);
         input.useDelimiter("\n");
     }
@@ -91,7 +91,7 @@ public class InvestmentApp {
         System.out.println("Enter Stock Ticker: ");
         String name = input.next();
         ArrayList<Invest> investments;
-        investments = tickers.getInvestments(name);
+        investments = portfolio.getInvestments(name);
 
         for (int i = 0; i < investments.size(); i++) {
             System.out.println("Amount Funded: $" + investments.get(i).getAmountFunded());
@@ -103,7 +103,7 @@ public class InvestmentApp {
 
     //EFFECTS: displays all purchased stock tickers in portfolio
     private void viewTickers() {
-        Set<String> keys = tickers.keySet();
+        Set<String> keys = portfolio.keySet();
         for (String k : keys) {
             System.out.println(k);
         }
@@ -120,7 +120,7 @@ public class InvestmentApp {
         double amountFunded = input.nextDouble();
 
         if (listedPrice > 0.0 && amountFunded > 0.0) {
-            tickers.addToPortfolio(name, listedPrice, amountFunded);
+            portfolio.addToPortfolio(name, listedPrice, amountFunded);
         } else {
             System.out.println("Invalid Entry");
         }
@@ -133,7 +133,7 @@ public class InvestmentApp {
         System.out.println("Enter Stock Ticker: ");
         String name = input.next();
         ArrayList<Invest> investments;
-        investments = tickers.getInvestments(name);
+        investments = portfolio.getInvestments(name);
 
         for (int i = 0; i < investments.size(); i++) {
             System.out.println("Index:" + i);
@@ -148,7 +148,7 @@ public class InvestmentApp {
         double percentage = input.nextDouble();
 
         if (index < investments.size() && currentPrice > 0 && percentage > 0 && percentage <= 100) {
-            tickers.sellInvestInPortfolio(name, currentPrice, percentage, index);
+            portfolio.sellInvestInPortfolio(name, currentPrice, percentage, index);
             System.out.println("Realized Gains: " + investments.get(index).getRealizedGains());
             System.out.println("Number Of Shares Remaining: " + investments.get(index).getNumberShares());
             System.out.println("Profit Gain/Loss: " + investments.get(index).getProfit());

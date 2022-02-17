@@ -36,7 +36,7 @@ finds it difficult to stay organized (like myself), this application helps with 
 - As a user, I want to be able to view information of all my investments for a given stock ticker in my portfolio 
 - As a user, I want to be able to see my profits (gain/loss) from selling an investment 
 
-- As a user, I want to be able to save all my purchased investments to file 
-- As a user, I want to be able to load all my purchased investments from file 
+- As a user, I want to be able to save all my purchased investments in my portfolio to file 
+- As a user, I want to be able to load all my purchased investments in my portfolio from file 
 
 

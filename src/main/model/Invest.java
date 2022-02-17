@@ -1,9 +1,12 @@
 package model;
 
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 // Represents an investment having stock ticker name, listed price, amount funded, number of shares,
 // profits, balance and realized gains (all in dollars)
-public class Invest {
+public class Invest implements Writable {
     private String name;
     private double amountFunded;
     private double listedPrice;
@@ -67,4 +70,17 @@ public class Invest {
         return balance;
     }
 
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("amountFunded", amountFunded);
+        json.put("listedPrice", listedPrice);
+        json.put("numberShares", getNumberShares());
+        json.put("balance", getBalance());
+        json.put("profit", getProfit());
+        json.put("realizedGains", getRealizedGains());
+        return json;
+    }
 }
