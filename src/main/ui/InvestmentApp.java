@@ -83,7 +83,7 @@ public class InvestmentApp {
         System.out.println("\tt -> View Portfolio by Ticker");
         System.out.println("\tb -> Buy");
         System.out.println("\ts -> Sell");
-        System.out.println("\tq -> quit");
+        System.out.println("\tq -> Quit");
     }
 
     //EFFECTS: display information of all investments for given stock ticker name currently in portfolio
