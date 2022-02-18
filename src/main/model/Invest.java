@@ -30,6 +30,10 @@ public class Invest implements Writable {
         realizedGains = 0.0;
     }
 
+
+    //OVERLOAD the constructor
+
+
     //REQUIRES: currentPrice > 0.0 && percentage <= 100.0  && percentage > 0.0
     //MODIFIES: this
     //EFFECTS: sell given percentage of shares at given current price/share. Deduct number of shares
@@ -72,7 +76,7 @@ public class Invest implements Writable {
 
 
     @Override
-    public JSONObject toJson() {
+    public JSONObject ToJson() {
         JSONObject json = new JSONObject();
         json.put("name", name);
         json.put("amountFunded", amountFunded);
