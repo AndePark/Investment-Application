@@ -31,8 +31,16 @@ public class Invest implements Writable {
     }
 
 
-    //OVERLOAD the constructor
-
+   public Invest(String name, double listedPrice, double amountFunded, double numberShares, double balance,
+                 double profit, double realizedGains) {
+        this.name = name;
+        this.listedPrice = listedPrice;
+        this.amountFunded = amountFunded;
+        this.numberShares = numberShares;
+        this.balance = balance;
+        this.profit = profit;
+        this.realizedGains = realizedGains;
+   }
 
     //REQUIRES: currentPrice > 0.0 && percentage <= 100.0  && percentage > 0.0
     //MODIFIES: this
