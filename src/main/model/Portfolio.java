@@ -33,6 +33,21 @@ public class Portfolio {
         }
     }
 
+    //REQUIRES:
+    //MODIFIES:
+    //EFFECTS:
+    public void addToPortfolio(String name, double listedPrice, double amountFunded,
+                               double numShares, double balance, double profit, double realizedGains) {
+        if (portfolio.containsKey(name)) {
+            portfolio.get(name).add(new Invest(name, listedPrice,
+                    amountFunded, numShares, balance, profit, realizedGains));
+        } else {
+            ArrayList<Invest> investments = new ArrayList<>();
+            investments.add(new Invest(name, listedPrice, amountFunded, numShares, balance, profit, realizedGains));
+            portfolio.put(name, investments);
+        }
+    }
+
     //REQUIRES: name must be in Portfolio && index must be associated to an investment in the list
     //MODIFIES: this, Invest
     //EFFECTS: chosen investment (via index) in the list of investments associated with given stock ticker name is sold

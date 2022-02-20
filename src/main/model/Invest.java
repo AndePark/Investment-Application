@@ -84,7 +84,7 @@ public class Invest implements Writable {
 
 
     @Override
-    public JSONObject ToJson() {
+    public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("name", name);
         json.put("amountFunded", amountFunded);

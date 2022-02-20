@@ -36,13 +36,11 @@ public class JsonReader {
     private String readFile(String source) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();
 
-        try (Stream<String> stream = Files.lines( Paths.get(source), StandardCharsets.UTF_8)) {
+        try (Stream<String> stream = Files.lines(Paths.get(source), StandardCharsets.UTF_8)) {
             stream.forEach(s -> contentBuilder.append(s));
         }
         return contentBuilder.toString();
     }
-
-
 
 
     // EFFECTS: parses portfolio from JSON array and returns it
@@ -51,23 +49,13 @@ public class JsonReader {
         for (Object json : jsonArray) {
             JSONObject stockInvestmentCombo = (JSONObject) json;
             addItems(pr, stockInvestmentCombo);
-
-
-//            stockInvestmentCombo.get("name"); // this would be the key to my hashmap
-//            stockInvestmentCombo.get("investments"); // this would be the value to my hashmap
-
         }
-
         return pr;
-
-
-
     }
 
 
-
     // parses
-    private ArrayList<Invest> addItems(Portfolio pr, JSONObject jsonObject) {
+    private void addItems(Portfolio pr, JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         JSONArray jsonArray = jsonObject.getJSONArray("investments");
         for (Object json1 : jsonArray) {
@@ -77,14 +65,20 @@ public class JsonReader {
 
     }
 
-    private Invest addItem(Portfolio pr, JSONObject jsonObject) {
+    private void addItem(Portfolio pr, JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         Double listedPrice = jsonObject.getDouble("listedPrice");
         Double amountFunded = jsonObject.getDouble("amountFunded");
+        Double numShares = jsonObject.getDouble("numberShares");
+        Double balance = jsonObject.getDouble("balance");
+        Double profit = jsonObject.getDouble("profit");
+        Double realizedGains = jsonObject.getDouble("realizedGains");
+
+        pr.addToPortfolio(name, listedPrice, amountFunded, numShares, balance, profit, realizedGains);
+
 
     }
-
-    }
+}
 
 
 
