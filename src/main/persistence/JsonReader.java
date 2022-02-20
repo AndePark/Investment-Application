@@ -13,6 +13,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
+import org.json.*;
 
 // Represent a reader that reads portfolio from JSON data stored in file
 public class JsonReader {
@@ -54,17 +55,20 @@ public class JsonReader {
     }
 
 
-    // parses
+    // MODIFIES: pr
+    // EFFECTS: parses investments from JSON object and adds them to portfolio
     private void addItems(Portfolio pr, JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         JSONArray jsonArray = jsonObject.getJSONArray("investments");
-        for (Object json1 : jsonArray) {
-            JSONObject nextInvestments = (JSONObject) json1;
+        for (Object json : jsonArray) {
+            JSONObject nextInvestments = (JSONObject) json;
             addItem(pr, nextInvestments);
         }
 
     }
 
+    // MODIFIES: pr
+    // EFFECTS: parses invest from JSON object and adds it to portfolio
     private void addItem(Portfolio pr, JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         Double listedPrice = jsonObject.getDouble("listedPrice");
