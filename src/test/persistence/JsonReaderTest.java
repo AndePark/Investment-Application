@@ -28,7 +28,7 @@ public class JsonReaderTest {
             Portfolio pr = reader.read();
             assertNotNull(pr.keySet());
         } catch (IOException e) {
-            fail("couldnt read");
+            fail("couldn't read");
         }
     }
 

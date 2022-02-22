@@ -2,6 +2,7 @@ package model;
 
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -86,7 +87,24 @@ public class Portfolio {
         return portfolio.containsKey(name);
     }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("investments", itemsToJson());
+        return json;
+    }
 
+    // EFFECTS: returns things in this workroom as a JSON array
+    private JSONArray itemsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (invest i : investments) {
+            jsonArray.put(i.toJson());
+        }
+
+        return jsonArray;
+    }
 
 
 
