@@ -3,6 +3,7 @@ package model;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import persistence.Writable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,7 +11,7 @@ import java.util.Set;
 
 // Represents an investment portfolio having stock ticker name associated to list of investments for that specific
 // stock
-public class Portfolio {
+public class Portfolio implements Writable {
     private HashMap<String, ArrayList<Invest>> portfolio;
 
     //EFFECTS: constructs an investment portfolio with stock ticker names each associated to list of investments made
@@ -88,25 +89,48 @@ public class Portfolio {
     }
 
     @Override
-    public JSONObject toJson() {
-        JSONObject json = new JSONObject();
-        json.put("name", name);
-        json.put("investments", itemsToJson());
+    public JSONArray toJson() {
+        JSONArray json = new JSONArray();
+
+        for (int i = 0; i < portfolio.size(); i++) {
+            for (String key : portfolio.keySet()) {
+                json.getJSONObject(i).put("name", key);
+                json.getJSONObject(i).put("investments", investmentsToJson(key));
+            }
+        }
         return json;
     }
 
-    // EFFECTS: returns things in this workroom as a JSON array
-    private JSONArray itemsToJson() {
+    private JSONArray investmentsToJson(String name) {
         JSONArray jsonArray = new JSONArray();
 
-        for (invest i : investments) {
+        for (Invest i : portfolio.get(name)) {
             jsonArray.put(i.toJson());
         }
-
         return jsonArray;
     }
-
-
-
-
 }
+
+
+//
+//    json.getJSONObject(0).put("name", portfolio. )
+//        }
+//
+//        json.put("name", namesToJson());
+//        json.put("investments", investToJson());
+//        return json;
+//    }
+//
+//    private JSONArray investToJson() {
+//        JSONArray jsonArray = new JSONArray();
+//
+//        for (invest i : )
+//    }
+//}
+//
+//
+////    public JSONObject toJson() {
+////        JSONObject json = new JSONObject(portfolio);
+////        return json;
+////    }
+////}

@@ -6,7 +6,7 @@ import persistence.Writable;
 
 // Represents an investment having stock ticker name, listed price, amount funded, number of shares,
 // profits, balance and realized gains (all in dollars)
-public class Invest implements Writable {
+public class Invest  {
     private String name;
     private double amountFunded;
     private double listedPrice;
@@ -83,7 +83,7 @@ public class Invest implements Writable {
     }
 
 
-    @Override
+    //@Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("name", name);
