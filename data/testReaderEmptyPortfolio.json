@@ -1,10 +1,4 @@
- [
-    {
-      "name": "",
-      "investments": []
-    },
-    {
-      "name": "",
-      "investments": []
-    }
-  ]
+{
+  "Portfolio": []
+}
+

@@ -1,7 +1,6 @@
 package persistence;
 
 
-import model.Invest;
 import model.Portfolio;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -10,10 +9,10 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.stream.Stream;
 
 import org.json.*;
+
 
 // Represent a reader that reads portfolio from JSON data stored in file
 public class JsonReader {
@@ -29,8 +28,8 @@ public class JsonReader {
     // throws IOException if an error occurs reading data from file
     public Portfolio read() throws IOException {
         String jsonData = readFile(source);
-        JSONArray jsonArray = new JSONArray(jsonData);
-        return parsedPortfolio(jsonArray);
+        JSONObject jsonObject = new JSONObject(jsonData);
+        return parsedPortfolio(jsonObject);
     }
 
     // EFFECTS: reads source file as string and returns it
@@ -45,8 +44,9 @@ public class JsonReader {
 
 
     // EFFECTS: parses portfolio from JSON array and returns it
-    private Portfolio parsedPortfolio(JSONArray jsonArray) {
+    private Portfolio parsedPortfolio(JSONObject jsonObject) {
         Portfolio pr = new Portfolio();
+        JSONArray jsonArray = jsonObject.getJSONArray("Portfolio");
         for (Object json : jsonArray) {
             JSONObject stockInvestmentCombo = (JSONObject) json;
             addItems(pr, stockInvestmentCombo);
@@ -55,21 +55,16 @@ public class JsonReader {
     }
 
 
-    // MODIFIES: pr
-    // EFFECTS: parses investments from JSON object and adds them to portfolio
     private void addItems(Portfolio pr, JSONObject jsonObject) {
-        String name = jsonObject.getString("name");
         JSONArray jsonArray = jsonObject.getJSONArray("investments");
         for (Object json : jsonArray) {
-            JSONObject nextInvestments = (JSONObject) json;
-            addItem(pr, nextInvestments);
+            JSONObject nextInvestment = (JSONObject) json;
+            addItem(pr, nextInvestment);
         }
-
     }
 
-    // MODIFIES: pr
-    // EFFECTS: parses invest from JSON object and adds it to portfolio
     private void addItem(Portfolio pr, JSONObject jsonObject) {
+
         String name = jsonObject.getString("name");
         Double listedPrice = jsonObject.getDouble("listedPrice");
         Double amountFunded = jsonObject.getDouble("amountFunded");
@@ -79,11 +74,7 @@ public class JsonReader {
         Double realizedGains = jsonObject.getDouble("realizedGains");
 
         pr.addToPortfolio(name, listedPrice, amountFunded, numShares, balance, profit, realizedGains);
-
-
     }
 }
-
-
 
 

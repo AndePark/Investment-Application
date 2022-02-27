@@ -30,7 +30,7 @@ public class JsonWriter {
     // MODIFIES: this
     // EFFECTS: writes JSON representation of portfolio to file
     public void write(Portfolio pr) {
-        JSONArray json = pr.toJson();
+        JSONObject json = pr.toJson();
         saveToFile(json.toString(TAB));
     }
 

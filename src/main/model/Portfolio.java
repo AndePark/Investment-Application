@@ -18,6 +18,7 @@ public class Portfolio implements Writable {
     //         for that specific stock ticker
     public Portfolio() {
         portfolio = new HashMap<>();
+
     }
 
     //REQUIRES: listedPrice > 0.0 && amountFunded > 0.0
@@ -37,9 +38,14 @@ public class Portfolio implements Writable {
         }
     }
 
-    //REQUIRES:
-    //MODIFIES:
-    //EFFECTS:
+    //REQUIRES: listedPrice, amountFunded,numShares, balance, profit && realizedGains > 0.0
+    //MODIFIES: this
+    //EFFECTS: if given stock ticker name is in portfolio, add a new Invest with given name, listed price/share
+    //         amount funded, numShares, balance, profit and realizedGains
+    //         to the Investments list associated to that name. Otherwise, a new portfolio
+    //         name is created with given stock ticker name, and a new Invest with given string name,
+    //         listed price/share, amountFunded, numShares, balance, profit, and realizedGains
+    //         is added to the new Investment list associated to the new portfolio name.
     public void addToPortfolio(String name, double listedPrice, double amountFunded,
                                double numShares, double balance, double profit, double realizedGains) {
         if (portfolio.containsKey(name)) {
@@ -89,48 +95,32 @@ public class Portfolio implements Writable {
     }
 
     @Override
-    public JSONArray toJson() {
-        JSONArray json = new JSONArray();
-
-        for (int i = 0; i < portfolio.size(); i++) {
-            for (String key : portfolio.keySet()) {
-                json.getJSONObject(i).put("name", key);
-                json.getJSONObject(i).put("investments", investmentsToJson(key));
-            }
-        }
-        return json;
+    public JSONObject toJson() {
+        JSONObject jsonObj = new JSONObject();
+        jsonObj.put("Portfolio", thingsToPortfolioToJson());
+        return jsonObj;
     }
 
-    private JSONArray investmentsToJson(String name) {
+    private JSONArray thingsToPortfolioToJson() {
         JSONArray jsonArray = new JSONArray();
 
-        for (Invest i : portfolio.get(name)) {
+        for (String key : portfolio.keySet()) {
+            JSONObject jsonobject = new JSONObject();
+            jsonobject.put("name", key);
+            jsonobject.put("investments", investmentsToJson(portfolio.get(key)));
+            jsonArray.put(jsonobject);
+
+        }
+        return jsonArray;
+    }
+
+
+    private JSONArray investmentsToJson(ArrayList<Invest> investments) {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Invest i : investments) {
             jsonArray.put(i.toJson());
         }
         return jsonArray;
     }
 }
-
-
-//
-//    json.getJSONObject(0).put("name", portfolio. )
-//        }
-//
-//        json.put("name", namesToJson());
-//        json.put("investments", investToJson());
-//        return json;
-//    }
-//
-//    private JSONArray investToJson() {
-//        JSONArray jsonArray = new JSONArray();
-//
-//        for (invest i : )
-//    }
-//}
-//
-//
-////    public JSONObject toJson() {
-////        JSONObject json = new JSONObject(portfolio);
-////        return json;
-////    }
-////}

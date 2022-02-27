@@ -1,7 +1,7 @@
 package persistence;
 
 import model.Portfolio;
-import org.json.JSONObject;
+
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -26,7 +26,8 @@ public class JsonReaderTest {
         JsonReader reader = new JsonReader("./data/testReaderEmptyPortfolio.json");
         try {
             Portfolio pr = reader.read();
-            assertNotNull(pr.keySet());
+            assertEquals(0, pr.getSize());
+            assertTrue(pr.isEmpty());
         } catch (IOException e) {
             fail("couldn't read");
         }
@@ -39,8 +40,9 @@ public class JsonReaderTest {
             Portfolio pr = reader.read();
             assertTrue(pr.containsKey("tesla"));
             assertTrue(pr.containsKey("apple"));
-            assertNotNull(pr.getInvestments("tesla"));
+            assertEquals(2, pr.getSize());
             assertEquals(2, pr.getInvestments("tesla").size());
+            assertEquals(1, pr.getInvestments("apple").size());
         } catch (IOException e) {
             fail("could not read");
         }

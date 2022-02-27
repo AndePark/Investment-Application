@@ -1,40 +1,41 @@
-[
-  {
-    "name": "tesla",
-    "investments": [
-      {
-        "name": "tesla",
-        "listedPrice": 1000.00,
-        "amountFunded": 200.00,
-        "numberShares": 5.00,
-        "balance": 200.40,
-        "profit": 1000.00,
-        "realizedGains": 4000
-      },
-      {
-        "name": "tesla",
-        "listedPrice": 2500.00,
-        "amountFunded": 300.00,
-        "numberShares": 23.00,
-        "balance": 23.40,
-        "profit": 100.00,
-        "realizedGains": 7000
-      }
-    ]
-  },
-
-  {
-    "name": "apple",
-    "investments": [
-      {
-        "name": "apple",
-        "listedPrice": 5000.00,
-        "amountFunded": 20.00,
-        "numberShares": 1.00,
-        "balance": 2320.40,
-        "profit": 10000.00,
-        "realizedGains": 4100
-      }
-    ]
-  }
+{
+  "Portfolio": [
+    {
+      "name": "tesla",
+      "investments": [
+        {
+          "name": "tesla",
+          "listedPrice": 1000.00,
+          "amountFunded": 200.00,
+          "numberShares": 5.00,
+          "balance": 200.40,
+          "profit": 1000.00,
+          "realizedGains": 4000
+        },
+        {
+          "name": "tesla",
+          "listedPrice": 2500.00,
+          "amountFunded": 300.00,
+          "numberShares": 23.00,
+          "balance": 23.40,
+          "profit": 100.00,
+          "realizedGains": 7000
+        }
+      ]
+    },
+    {
+      "name": "apple",
+      "investments": [
+        {
+          "name": "apple",
+          "listedPrice": 5000.00,
+          "amountFunded": 20.00,
+          "numberShares": 1.00,
+          "balance": 2320.40,
+          "profit": 10000.00,
+          "realizedGains": 4100
+        }
+      ]
+    }
   ]
+}
