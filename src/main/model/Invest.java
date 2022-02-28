@@ -55,7 +55,6 @@ public class Invest implements Writable  {
         profit = balance - amountFunded;
     }
 
-
     public String getName() {
         return name;
     }
