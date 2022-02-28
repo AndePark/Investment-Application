@@ -33,8 +33,8 @@ public class Invest implements Writable  {
     //REQUIRES: name has a non-zero length
     //EFFECTS: constructs an investment with given name, listed price/share, amountFunded, numShares, balance,
     //         profit, and realizedGains (money back from selling x-amount of shares)
-   public Invest(String name, double listedPrice, double amountFunded, double numberShares, double balance,
-                 double profit, double realizedGains) {
+    public Invest(String name, double listedPrice, double amountFunded,
+                 double numberShares, double balance, double profit, double realizedGains) {
         this.name = name;
         this.listedPrice = listedPrice;
         this.amountFunded = amountFunded;
