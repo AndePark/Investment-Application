@@ -42,7 +42,7 @@ public class Invest implements Writable  {
         this.balance = balance;
         this.profit = profit;
         this.realizedGains = realizedGains;
-   }
+    }
 
     //REQUIRES: currentPrice > 0.0 && percentage <= 100.0  && percentage > 0.0
     //MODIFIES: this
