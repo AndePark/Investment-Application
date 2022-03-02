@@ -2,12 +2,16 @@ package ui;
 
 import model.Invest;
 import model.Portfolio;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 
 // referenced Teller UI for displayMenu && command
 // model: ca.ubc.cpsc210.bank.ui.TellerApp from https://github.students.cs.ubc.ca/CPSC210/TellerApp
 
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Set;
@@ -16,11 +20,19 @@ import java.util.Set;
 
 //Investment application
 public class InvestmentApp {
+    private static final String JSON_STORE = "./data/portfolio.json";
     private Portfolio portfolio;
     private Scanner input;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     //EFFECTS: runs the investment application
-    public InvestmentApp() {
+    public InvestmentApp() throws FileNotFoundException {
+        input = new Scanner(System.in);
+        input.useDelimiter("\n");
+        portfolio = new Portfolio();
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runInvestment();
     }
 
@@ -29,8 +41,7 @@ public class InvestmentApp {
     private void runInvestment() {
         boolean showProfile = true;
         String command = null;
-
-        init();
+        input = new Scanner(System.in);
 
         while (showProfile) {
             displayMenu();
@@ -56,11 +67,20 @@ public class InvestmentApp {
             case "t":
                 viewByTicker();
                 break;
+            case "p":
+                viewTotalProfit();
+                break;
             case "b":
                 buyInvestment();
                 break;
             case "s":
                 sellInvestment();
+                break;
+            case "c":
+                savePortfolio();
+                break;
+            case "l":
+                loadPortfolio();
                 break;
             default:
                 System.out.println("Invalid Submission");
@@ -68,21 +88,16 @@ public class InvestmentApp {
         }
     }
 
-    // MODIFIES: this
-    // EFFECTS: initializes portfolio
-    private void init() {
-        portfolio = new Portfolio();
-        input = new Scanner(System.in);
-        input.useDelimiter("\n");
-    }
-
     // EFFECTS: displays menu of options to user
     private void displayMenu() {
         System.out.println("\nSelect from:");
         System.out.println("\tv -> View Tickers");
-        System.out.println("\tt -> View Portfolio by Ticker");
+        System.out.println("\tt -> View Information for Individual Ticker");
+        System.out.println("\tp -> View Total Profits for Ticker");
         System.out.println("\tb -> Buy");
         System.out.println("\ts -> Sell");
+        System.out.println("\tc -> Save Portfolio to File");
+        System.out.println("\tl -> Load Portfolio from File");
         System.out.println("\tq -> Quit");
     }
 
@@ -93,12 +108,26 @@ public class InvestmentApp {
         ArrayList<Invest> investments;
         investments = portfolio.getInvestments(name);
 
-        for (int i = 0; i < investments.size(); i++) {
-            System.out.println("Amount Funded: $" + investments.get(i).getAmountFunded());
-            System.out.println("Purchased At: " + investments.get(i).getListPrice() + "$/share");
-            System.out.println("Number Of Shares Holding:" + investments.get(i).getNumberShares());
-            System.out.println("Profit Gain/Loss: $" + investments.get(i).getProfit() + "\n");
+        for (Invest investment : investments) {
+            System.out.println("Amount Funded: $" + investment.getAmountFunded());
+            System.out.println("Purchased At: " + investment.getListPrice() + "$/share");
+            System.out.println("Number Of Shares Holding:" + investment.getNumberShares());
+            System.out.println("Profit Gain/Loss: $" + investment.getProfit() + "\n");
         }
+    }
+
+    private void viewTotalProfit() {
+        System.out.println("Enter Stock Ticker: ");
+        String name = input.next();
+        ArrayList<Invest> investments;
+        investments = portfolio.getInvestments(name);
+
+        int profit = 0;
+
+        for (Invest investment : investments) {
+            profit += investment.getProfit();
+        }
+        System.out.println("Total Profits/Loss for " + name + " is: " + profit);
     }
 
     //EFFECTS: displays all purchased stock tickers in portfolio
@@ -156,5 +185,28 @@ public class InvestmentApp {
             System.out.println("Investment Cannot be Sold, 1 or More Fields Entered Incorrectly");
         }
 
+    }
+
+    //EFFECTS: saves the portfolio to file
+    private void savePortfolio() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(portfolio);
+            jsonWriter.close();
+            System.out.println("Saved Portfolio to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to Write to File: " + JSON_STORE);
+        }
+    }
+
+    //MODIFIES: this
+    //EFFECTS: loads workroom from file
+    private void loadPortfolio() {
+        try {
+            portfolio = jsonReader.read();
+            System.out.println("Loaded Portfolio from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to Read from File " + JSON_STORE);
+        }
     }
 }

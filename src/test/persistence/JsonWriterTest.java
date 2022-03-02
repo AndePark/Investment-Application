@@ -54,7 +54,9 @@ public class JsonWriterTest {
 
             JsonReader reader = new JsonReader("./data/testWriterGeneralPortfolio.json");
             pr = reader.read();
+            assertEquals(2, pr.getSize());
             assertNotNull(pr.getInvestments("tesla"));
+            assertNotNull(pr.getInvestments("apple"));
         } catch (IOException e) {
             fail("Exception should not have been thrown");
         }
