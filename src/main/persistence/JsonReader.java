@@ -44,7 +44,7 @@ public class JsonReader {
     }
 
 
-    // EFFECTS: parses portfolio from JSON array and returns it
+    // EFFECTS: parses portfolio from JSON Object and returns it
     private Portfolio parsedPortfolio(JSONObject jsonObject) {
         Portfolio pr = new Portfolio();
         JSONArray jsonArray = jsonObject.getJSONArray("Portfolio");
@@ -55,7 +55,8 @@ public class JsonReader {
         return pr;
     }
 
-
+    //MODIFIES: pr
+    //EFFECTS: parses investments from JSON object and adds them to portfolio
     private void addItems(Portfolio pr, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("investments");
         for (Object json : jsonArray) {
@@ -64,6 +65,8 @@ public class JsonReader {
         }
     }
 
+    //MODIFIES: pr
+    //EFFECTS: parses investment from JSON object and adds it to portfolio
     private void addItem(Portfolio pr, JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         Double listedPrice = jsonObject.getDouble("listedPrice");

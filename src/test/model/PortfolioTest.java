@@ -21,7 +21,6 @@ public class PortfolioTest {
         assertNotNull(portfolio1.keySet());
         assertFalse(portfolio1.containsKey("Tesla"));
         assertFalse(portfolio1.containsKey("Apple"));
-
     }
 
 
