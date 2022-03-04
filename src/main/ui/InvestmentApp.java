@@ -9,6 +9,9 @@ import persistence.JsonWriter;
 // referenced Teller UI for displayMenu && command
 // model: ca.ubc.cpsc210.bank.ui.TellerApp from https://github.students.cs.ubc.ca/CPSC210/TellerApp
 
+// referenced JsonTutorial UI for savePortfolio() && loadPortfolio()
+// model: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -59,6 +62,7 @@ public class InvestmentApp {
 
     // MODIFIES: this
     // EFFECTS: processes user command
+    @SuppressWarnings ("methodlength")
     private void processCommand(String command) {
         switch (command) {
             case "v":
@@ -94,8 +98,8 @@ public class InvestmentApp {
         System.out.println("\tv -> View Tickers");
         System.out.println("\tt -> View Information for Individual Ticker");
         System.out.println("\tp -> View Total Profits for Ticker");
-        System.out.println("\tb -> Buy");
-        System.out.println("\ts -> Sell");
+        System.out.println("\tb -> Buy Investment");
+        System.out.println("\ts -> Sell Investment");
         System.out.println("\tc -> Save Portfolio to File");
         System.out.println("\tl -> Load Portfolio from File");
         System.out.println("\tq -> Quit");
@@ -105,29 +109,39 @@ public class InvestmentApp {
     private void viewByTicker() {
         System.out.println("Enter Stock Ticker: ");
         String name = input.next();
-        ArrayList<Invest> investments;
-        investments = portfolio.getInvestments(name);
+        if (portfolio.containsKey(name)) {
+            ArrayList<Invest> investments;
+            investments = portfolio.getInvestments(name);
 
-        for (Invest investment : investments) {
-            System.out.println("Amount Funded: $" + investment.getAmountFunded());
-            System.out.println("Purchased At: " + investment.getListPrice() + "$/share");
-            System.out.println("Number Of Shares Holding:" + investment.getNumberShares());
-            System.out.println("Profit Gain/Loss: $" + investment.getProfit() + "\n");
+            for (Invest investment : investments) {
+                System.out.println("Amount Funded: $" + investment.getAmountFunded());
+                System.out.println("Purchased At: " + investment.getListPrice() + "$/share");
+                System.out.println("Number Of Shares Holding:" + investment.getNumberShares());
+                System.out.println("Profit Gain/Loss: $" + investment.getProfit() + "\n");
+            }
+        } else {
+            System.out.println("Given Stock Ticker Does Not Exist in Portfolio");
         }
     }
 
+    //EFFECTS: displays total profits for given stock ticker
     private void viewTotalProfit() {
         System.out.println("Enter Stock Ticker: ");
         String name = input.next();
-        ArrayList<Invest> investments;
-        investments = portfolio.getInvestments(name);
 
-        int profit = 0;
+        if (portfolio.containsKey(name)) {
+            ArrayList<Invest> investments;
+            investments = portfolio.getInvestments(name);
 
-        for (Invest investment : investments) {
-            profit += investment.getProfit();
+            int profit = 0;
+
+            for (Invest investment : investments) {
+                profit += investment.getProfit();
+            }
+            System.out.println("Total Profits/Loss for " + name + " is: $" + profit);
+        } else {
+            System.out.println("Given Stock Ticker Does Not Exist in Portfolio");
         }
-        System.out.println("Total Profits/Loss for " + name + " is: " + profit);
     }
 
     //EFFECTS: displays all purchased stock tickers in portfolio
@@ -156,7 +170,7 @@ public class InvestmentApp {
     }
 
 
-    //MODIFIES:this, Invest
+    //MODIFIES: this, Invest
     //EFFECTS: conducts a sell of an investment
     private void sellInvestment() {
         System.out.println("Enter Stock Ticker: ");
@@ -167,7 +181,7 @@ public class InvestmentApp {
         for (int i = 0; i < investments.size(); i++) {
             System.out.println("Index:" + i);
             System.out.println("Number of Shares Holding:" + investments.get(i).getNumberShares());
-            System.out.println("Purchased At:" +  investments.get(i).getListPrice() + "$/share" + "\n");
+            System.out.println("Purchased At:" + "$" + investments.get(i).getListPrice() + "/share" + "\n");
         }
         System.out.println("Enter Index Number:  ");
         int index = input.nextInt();
@@ -178,9 +192,9 @@ public class InvestmentApp {
 
         if (index < investments.size() && currentPrice > 0 && percentage > 0 && percentage <= 100) {
             portfolio.sellInvestInPortfolio(name, currentPrice, percentage, index);
-            System.out.println("Realized Gains: " + investments.get(index).getRealizedGains());
+            System.out.println("Realized Gains: $" + investments.get(index).getRealizedGains());
             System.out.println("Number Of Shares Remaining: " + investments.get(index).getNumberShares());
-            System.out.println("Profit Gain/Loss: " + investments.get(index).getProfit());
+            System.out.println("Profit Gain/Loss: $" + investments.get(index).getProfit());
         } else {
             System.out.println("Investment Cannot be Sold, 1 or More Fields Entered Incorrectly");
         }

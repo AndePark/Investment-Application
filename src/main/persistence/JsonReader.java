@@ -11,7 +11,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
-
+// referenced JsonTutorial.JsonReader for JsonReader() && read() && readFile()/ took inspiration
+// for parsedPortfolio() && addItems() && addItem()
+// model: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 
 // Represent a reader that reads portfolio from JSON data stored in file
 public class JsonReader {
@@ -63,7 +65,6 @@ public class JsonReader {
     }
 
     private void addItem(Portfolio pr, JSONObject jsonObject) {
-
         String name = jsonObject.getString("name");
         Double listedPrice = jsonObject.getDouble("listedPrice");
         Double amountFunded = jsonObject.getDouble("amountFunded");

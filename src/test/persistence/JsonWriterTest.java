@@ -7,7 +7,11 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class JsonWriterTest {
+// referenced JsonTutorial.JsonWriterTest for testWriterInvalidFile() && testWriterEmptyPortfolio()/ took inspiration
+// for testWriterGeneralPortfolio()
+// model: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
+public class JsonWriterTest extends JsonTest {
 
     @Test
     void testWriterInvalidFile() {
@@ -55,11 +59,16 @@ public class JsonWriterTest {
             JsonReader reader = new JsonReader("./data/testWriterGeneralPortfolio.json");
             pr = reader.read();
             assertEquals(2, pr.getSize());
-            assertNotNull(pr.getInvestments("tesla"));
-            assertNotNull(pr.getInvestments("apple"));
+
+            checkInvestments("tesla", 1000, 3000,3, 3000,
+                    0, 0, pr.getInvestments("tesla").get(0));
+            checkInvestments("tesla", 2000, 4000, 2, 4000,
+                    0, 0, pr.getInvestments("tesla").get(1));
+            checkInvestments("apple", 100, 500, 4, 450,
+                    -50, 50, pr.getInvestments("apple").get(0));
+
         } catch (IOException e) {
             fail("Exception should not have been thrown");
         }
     }
-
 }

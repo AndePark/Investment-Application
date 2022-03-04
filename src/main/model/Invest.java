@@ -4,6 +4,10 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
+// referenced JsonTutorial.Thingy for toJson()
+// model: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
+
 // Represents an investment having stock ticker name, listed price, amount funded, number of shares,
 // profits, balance and realized gains (all in dollars)
 public class Invest implements Writable  {

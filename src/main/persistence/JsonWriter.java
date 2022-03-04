@@ -5,8 +5,9 @@ import model.Portfolio;
 import org.json.JSONObject;
 
 import java.io.*;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+
+// referenced JsonTutorial.JsonWriter for JsonWriter() && open() && write() && close() && saveToFile() && fields
+// model: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 
 
 // Represents a writer that writes JSON representation of Portfolio to file

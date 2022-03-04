@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
+// referenced JsonTutorial.WorkRoom for toJson()/ took inspiration for thingsToPortfolioToJson() && investmentsToJson()
+// model: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
+
 // Represents an investment portfolio having stock ticker name associated to list of investments for that specific
 // stock
 public class Portfolio implements Writable {
@@ -101,6 +105,8 @@ public class Portfolio implements Writable {
         return jsonObj;
     }
 
+    //EFFECTS: returns ticker name and its associated investments
+    // in this portfolio as a JSON array
     private JSONArray thingsToPortfolioToJson() {
         JSONArray jsonArray = new JSONArray();
 
@@ -114,7 +120,7 @@ public class Portfolio implements Writable {
         return jsonArray;
     }
 
-
+    //EFFECTS: returns investments in this portfolio as a JSON array
     private JSONArray investmentsToJson(ArrayList<Invest> investments) {
         JSONArray jsonArray = new JSONArray();
 
