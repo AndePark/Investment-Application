@@ -1,61 +1,12 @@
-{"Portfolio": [
-    {
-        "name": "apple",
-        "investments": [{
-            "numberShares": 2,
-            "balance": 8000,
-            "realizedGains": 0,
-            "amountFunded": 8000,
-            "name": "apple",
-            "listedPrice": 4000,
-            "profit": 0
-        }]
-    },
-    {
+{"Portfolio": [{
+    "name": "tesla",
+    "investments": [{
+        "numberShares": 15,
+        "balance": 300,
+        "realizedGains": 0,
+        "amountFunded": 300,
         "name": "tesla",
-        "investments": [{
-            "numberShares": 2,
-            "balance": 2000,
-            "realizedGains": 0,
-            "amountFunded": 2000,
-            "name": "tesla",
-            "listedPrice": 1000,
-            "profit": 0
-        }]
-    },
-    {
-        "name": "amc",
-        "investments": [
-            {
-                "numberShares": 5,
-                "balance": 3100,
-                "realizedGains": 3000,
-                "amountFunded": 400,
-                "name": "amc",
-                "listedPrice": 20,
-                "profit": 2700
-            },
-            {
-                "numberShares": 2,
-                "balance": 2000,
-                "realizedGains": 0,
-                "amountFunded": 2000,
-                "name": "amc",
-                "listedPrice": 1000,
-                "profit": 0
-            }
-        ]
-    },
-    {
-        "name": "yahoo",
-        "investments": [{
-            "numberShares": 15,
-            "balance": 300,
-            "realizedGains": 0,
-            "amountFunded": 300,
-            "name": "yahoo",
-            "listedPrice": 20,
-            "profit": 0
-        }]
-    }
-]}
+        "listedPrice": 20,
+        "profit": 0
+    }]
+}]}
