@@ -1,6 +1,7 @@
 package ui;
 
 
+import model.Invest;
 import model.Portfolio;
 
 import javax.swing.*;
@@ -11,8 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
-
+import static java.lang.Double.parseDouble;
 
 
 public class InvestmentAppGUI {
@@ -180,4 +180,46 @@ public class InvestmentAppGUI {
             }
         });
     }
+    @SuppressWarnings("checkstyle:MethodLength")
+    private void addUserInvestment() {
+
+        Object [] row = new Object[7];
+        row[0] = ticker.getText().toUpperCase();
+        row[1] = amountFunded.getText();
+        row[2] = listedPrice.getText();
+        row[3] = (Double.parseDouble(amountFunded.getText()) / Double.parseDouble(listedPrice.getText())); // num shares
+        row[4] = 0.0; // profit
+        row[5] = amountFunded.getText(); // balance
+        row[6] = 0.0;
+
+        Invest addInvest = new Invest(
+                row[0].toString(),
+                parseDouble(row[1].toString()),
+                parseDouble(row[2].toString()),
+                parseDouble(row[3].toString()),
+                parseDouble(row[4].toString()),
+                parseDouble(row[5].toString()),
+                parseDouble(row[6].toString()));
+
+        // i need to add the invest to the portfolio
+        portfolio.addToPortfolio(row[0].toString(),
+                parseDouble(row[1].toString()),
+                parseDouble(row[2].toString()),
+                parseDouble(row[3].toString()),
+                parseDouble(row[4].toString()),
+                parseDouble(row[5].toString()),
+                parseDouble(row[6].toString()));
+
+        tableModel.addRow(row);
+
+    }
+
+    // MODIFIES: this
+    // EFFECTS: clears text field boxes
+    private void clearUserInvestment() {
+        ticker.setText("");
+        amountFunded.setText("");
+        listedPrice.setText("");
+    }
+
 }
