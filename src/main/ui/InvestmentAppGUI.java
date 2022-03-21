@@ -3,6 +3,8 @@ package ui;
 
 import model.Invest;
 import model.Portfolio;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -11,6 +13,9 @@ import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
 
 import static java.lang.Double.parseDouble;
 
@@ -20,6 +25,7 @@ public class InvestmentAppGUI {
     private static final int FRAME_HEIGHT = 800;
     private static final String[] COLUMNNAMES = {"Ticker", "Amount Funded", "Listed Price",
             "# of Shares", "Profit", "Balance", "Realized Gains"};
+    private static final String JSON_STORE = "./data/portfolio.json";
 
     private JFrame frame;
     private JTable table;
@@ -30,6 +36,9 @@ public class InvestmentAppGUI {
     private JTextField percentage;
     private JTextField currentPrice;
     private Portfolio portfolio;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+
 
     public InvestmentAppGUI() {
         runGUI();
@@ -38,13 +47,15 @@ public class InvestmentAppGUI {
     private void runGUI() {
         frame = new JFrame();
         portfolio = new Portfolio();
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
 
         initializeInvestInputs();
         initializeJLabels();
         initializeButtonBuy();
         initializeButtonSell();
-        //initializeButtonSave();
-        //initializeButtonLoad();
+        initializeButtonSave();
+        initializeButtonLoad();
         initializeTable();
 
         frame.setLayout(null);
@@ -160,27 +171,105 @@ public class InvestmentAppGUI {
             public void actionPerformed(ActionEvent e) {
                 if (table.getSelectedRow() >= 0) {
                     int i = table.getSelectedRow();
-
-                    Double numShares = (Double) tableModel.getValueAt(i, 3);
-
-
-                    Double numSharesUpdate = (Double.parseDouble(percentage.getText()) * numShares) / 100;
-                    Double numSharesRemain = (numSharesUpdate * 100) / (Double.parseDouble(percentage.getText()))
-                            - numSharesUpdate; // INCORRECT
-                    tableModel.setValueAt(numSharesUpdate, i, 3);
-                    Double realizedGainsUpdate = (Double.parseDouble(currentPrice.getText()) * numSharesUpdate);
-                    tableModel.setValueAt(realizedGainsUpdate, i, 6);
-
-                    Double balanceUpdate = (numSharesRemain * (Double) tableModel.getValueAt(i, 2))
-                            + realizedGainsUpdate;
-                    tableModel.setValueAt(balanceUpdate, i, 5);
-                    Double profitUpdate = balanceUpdate - (Double) tableModel.getValueAt(i, 1);
-                    tableModel.setValueAt(profitUpdate, i, 4);
+                    editUserInvestment(i);
                 }
             }
         });
     }
-    @SuppressWarnings("checkstyle:MethodLength")
+
+    private void initializeButtonSave() {
+        JButton buttonSave = new JButton("Save");
+        buttonSave.setBounds(150, 400, 100, 30);
+        frame.add(buttonSave);
+
+        buttonSave.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    jsonWriter.open();
+                    jsonWriter.write(portfolio);
+                    jsonWriter.close();
+                } catch (FileNotFoundException fe) {
+                    System.out.println("Unable to Write to File: " + JSON_STORE);
+                }
+            }
+        });
+    }
+
+    private void initializeButtonLoad() {
+        JButton buttonLoad = new JButton("Load");
+        buttonLoad.setBounds(150, 450, 100, 30);
+        frame.add(buttonLoad);
+
+        buttonLoad.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadPortfolio();
+            }
+        });
+    }
+
+    private void loadPortfolio() {
+        try {
+            portfolio = jsonReader.read();
+            for (String name : portfolio.keySet()) {
+                ArrayList<Invest> invests = portfolio.getInvestments(name);
+                for (int j = 0; j < invests.size(); j++) {
+                    Invest invest = invests.get(j);
+                    Object[] row = new Object[7];
+                    row[0] = invest.getName();
+                    row[1] = invest.getAmountFunded();
+                    row[2] = invest.getListPrice();
+                    row[3] = invest.getNumberShares();
+                    row[4] = invest.getProfit();
+                    row[5] = invest.getBalance();
+                    row[6] = invest.getRealizedGains();
+
+                    tableModel.addRow(row);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Unable to Read from File " + JSON_STORE);
+        }
+    }
+
+    private void editUserInvestment(int i) {
+        final Double numShares = (Double) tableModel.getValueAt(i,3);
+        Double numSharesUpdate = (Double.parseDouble(percentage.getText()) * numShares) / 100;
+        Double numSharesRemain = numShares - numSharesUpdate;
+        tableModel.setValueAt(numSharesRemain, i,3);
+
+        Double realizedGainsUpdate = (Double.parseDouble(currentPrice.getText()) * numSharesUpdate);
+        tableModel.setValueAt(realizedGainsUpdate,i,6);
+
+        Double balanceUpdate = (numSharesRemain * (Double) tableModel.getValueAt(i, 2))
+                               + realizedGainsUpdate;
+        tableModel.setValueAt(balanceUpdate, i, 5);
+
+
+    }
+
+//
+//                    Double numShares = (Double) tableModel.getValueAt(i, 3);
+//
+//
+//                    Double numSharesUpdate = (Double.parseDouble(percentage.getText()) * numShares) / 100;
+//                    Double numSharesRemain = (numSharesUpdate * 100) / (Double.parseDouble(percentage.getText()))
+//                            - numSharesUpdate; // INCORRECT
+//                    tableModel.setValueAt(numSharesUpdate, i, 3);
+//                    Double realizedGainsUpdate = (Double.parseDouble(currentPrice.getText()) * numSharesUpdate);
+//                    tableModel.setValueAt(realizedGainsUpdate, i, 6);
+//
+//                    Double balanceUpdate = (numSharesRemain * (Double) tableModel.getValueAt(i, 2))
+//                            + realizedGainsUpdate;
+//                    tableModel.setValueAt(balanceUpdate, i, 5);
+//                    Double profitUpdate = balanceUpdate - (Double) tableModel.getValueAt(i, 1);
+//                    tableModel.setValueAt(profitUpdate, i, 4);
+//                }
+//            }
+//        });
+//    }
+
     private void addUserInvestment() {
 
         Object [] row = new Object[7];
@@ -192,16 +281,16 @@ public class InvestmentAppGUI {
         row[5] = amountFunded.getText(); // balance
         row[6] = 0.0;
 
-        Invest addInvest = new Invest(
-                row[0].toString(),
-                parseDouble(row[1].toString()),
-                parseDouble(row[2].toString()),
-                parseDouble(row[3].toString()),
-                parseDouble(row[4].toString()),
-                parseDouble(row[5].toString()),
-                parseDouble(row[6].toString()));
-
-        // i need to add the invest to the portfolio
+//        Invest addInvest = new Invest(
+//                row[0].toString(),
+//                parseDouble(row[1].toString()),
+//                parseDouble(row[2].toString()),
+//                parseDouble(row[3].toString()),
+//                parseDouble(row[4].toString()),
+//                parseDouble(row[5].toString()),
+//                parseDouble(row[6].toString()));
+//
+//        // i need to add the invest to the portfolio
         portfolio.addToPortfolio(row[0].toString(),
                 parseDouble(row[1].toString()),
                 parseDouble(row[2].toString()),

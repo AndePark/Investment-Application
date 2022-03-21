@@ -29,8 +29,8 @@ public class Invest implements Writable  {
         this.amountFunded = amountFunded;
         this.listedPrice = listedPrice;
         this.numberShares = (amountFunded / listedPrice);
-        this.balance = amountFunded;
         profit = 0.0;
+        this.balance = amountFunded;
         realizedGains = 0.0;
     }
 
@@ -43,8 +43,8 @@ public class Invest implements Writable  {
         this.listedPrice = listedPrice;
         this.amountFunded = amountFunded;
         this.numberShares = numberShares;
-        this.balance = balance;
         this.profit = profit;
+        this.balance = balance;
         this.realizedGains = realizedGains;
     }
 
@@ -95,8 +95,8 @@ public class Invest implements Writable  {
         json.put("amountFunded", amountFunded);
         json.put("listedPrice", listedPrice);
         json.put("numberShares", getNumberShares());
-        json.put("balance", getBalance());
         json.put("profit", getProfit());
+        json.put("balance", getBalance());
         json.put("realizedGains", getRealizedGains());
         return json;
     }
