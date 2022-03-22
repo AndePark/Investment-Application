@@ -6,13 +6,18 @@ import model.Portfolio;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,11 +28,13 @@ import static java.lang.Double.parseDouble;
 public class InvestmentAppGUI {
     private static final int FRAME_WIDTH = 1000;
     private static final int FRAME_HEIGHT = 800;
-    private static final String[] COLUMNNAMES = {"Ticker", "Amount Funded", "Listed Price",
-            "# of Shares", "Profit", "Balance", "Realized Gains"};
+    private static final String[] COLUMNNAMES = {"Ticker", "Listed Price", "Amount Funded",
+            "# of Shares", "Balance", "Profit", "Realized Gains"};
     private static final String JSON_STORE = "./data/portfolio.json";
 
     private JFrame frame;
+    private JFrame frame2;
+    private JPanel introPanel;
     private JTable table;
     private DefaultTableModel tableModel;
     private JTextField ticker;
@@ -35,13 +42,64 @@ public class InvestmentAppGUI {
     private JTextField listedPrice;
     private JTextField percentage;
     private JTextField currentPrice;
+    private JTextField search;
     private Portfolio portfolio;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
+    private JLabel tickerText;
+    private JLabel amountFundedText;
+    private JLabel listedPriceText;
+    private JLabel percentageText;
+    private JLabel currentPriceText;
+    private JLabel searchText;
+    private Timer introTimer;
+
+
 
 
     public InvestmentAppGUI() {
-        runGUI();
+        runIntroGUI();
+        introTimer = new Timer(1500, e -> {
+            frame2.setVisible(false);
+            runGUI();
+        });
+        introTimer.setRepeats(false);
+        introTimer.start();
+    }
+
+    private void runIntroGUI() {
+        introPanel = new JPanel();
+        introPanel.setBackground(Color.black);
+        ImageIcon icon;
+        BufferedImage image;
+        initFrame2();
+
+        try {
+            image = ImageIO.read(new File("./data/bull_bear.jpg"));
+            icon = new ImageIcon(image);
+
+            JLabel introLabel = new JLabel();
+            introLabel.setPreferredSize(new Dimension(945, 533));
+            introLabel.setIcon(icon);
+
+            introPanel.add(introLabel);
+            frame2.getContentPane().add(introPanel);
+            frame2.invalidate();
+            frame2.validate();
+
+        } catch (IOException e) {
+            System.out.println("Run Again");
+        }
+    }
+
+    private void initFrame2() {
+        frame2 = new JFrame();
+        frame2.setSize(945, 533);
+        frame2.setTitle("Investment Portfolio");
+        frame2.setResizable(false);
+        frame2.setLocationRelativeTo(null);
+        frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame2.setVisible(true);
     }
 
     private void runGUI() {
@@ -56,12 +114,14 @@ public class InvestmentAppGUI {
         initializeButtonSell();
         initializeButtonSave();
         initializeButtonLoad();
+        initializeButtonSearch();
         initializeTable();
 
         frame.setLayout(null);
         frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+        frame.getContentPane().setBackground(new Color(77, 13, 58));
         frame.setTitle("Investment Portfolio");
-        frame.setResizable(true);
+        frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
@@ -80,6 +140,10 @@ public class InvestmentAppGUI {
                 return false;
             }
         };
+
+
+        table.setAutoCreateRowSorter(true);
+
         tableModel.setColumnIdentifiers(COLUMNNAMES);
         table.setModel(tableModel);
         table.setRowHeight(100);
@@ -110,13 +174,15 @@ public class InvestmentAppGUI {
         listedPrice = new JTextField();
         percentage = new JTextField();
         currentPrice = new JTextField();
+        search = new JTextField();
 
 
-        ticker.setBounds(50, 50, 150, 20);
-        amountFunded.setBounds(50, 100, 150, 20);
-        listedPrice.setBounds(50, 150, 150, 20);
-        percentage.setBounds(50, 200, 150, 20);
-        currentPrice.setBounds(50, 250, 150, 20);
+        ticker.setBounds(200, 600, 150, 20);
+        amountFunded.setBounds(200, 650, 150, 20);
+        listedPrice.setBounds(200, 700, 150, 20);
+        percentage.setBounds(700, 600, 150, 20);
+        currentPrice.setBounds(700, 700, 150, 20);
+        search.setBounds(100, 460, 80, 30);
 
 
         frame.add(ticker);
@@ -124,31 +190,52 @@ public class InvestmentAppGUI {
         frame.add(listedPrice);
         frame.add(percentage);
         frame.add(currentPrice);
+        frame.add(search);
     }
 
     private void initializeJLabels() {
-        JLabel tickerText = new JLabel("Ticker");
-        JLabel amountFundedText = new JLabel("Amount Funded");
-        JLabel listedPriceText = new JLabel("Listed Price");
-        JLabel percentageText = new JLabel("% to Sell");
-        JLabel currentPriceText = new JLabel("Current Listed Price");
+        tickerText = new JLabel("Ticker");
+        amountFundedText = new JLabel("Amount Funded");
+        listedPriceText = new JLabel("Listed Price");
+        percentageText = new JLabel("% to Sell");
+        currentPriceText = new JLabel("Current Listed Price");
+        searchText = new JLabel("Search by Name");
 
-        tickerText.setBounds(55, 30, 150, 20);
-        amountFundedText.setBounds(55, 80, 150, 20);
-        listedPriceText.setBounds(55, 130, 150, 20);
-        percentageText.setBounds(55, 180, 150, 20);
-        currentPriceText.setBounds(55, 230, 150, 20);
+        tickerText.setBounds(205, 580, 150, 20);
+        tickerText.setForeground(new Color(255,255,255));
+
+        amountFundedText.setBounds(205, 630, 150, 20);
+        amountFundedText.setForeground(new Color(255,255,255));
+
+        listedPriceText.setBounds(205, 680, 150, 20);
+        listedPriceText.setForeground(new Color(255,255,255));
+
+        percentageText.setBounds(705, 580, 150, 20);
+        percentageText.setForeground(new Color(255,255,255));
+
+        currentPriceText.setBounds(705, 680, 150, 20);
+        currentPriceText.setForeground(new Color(255,255,255));
+
+        searchText.setBounds(50, 410, 150, 20);
+        searchText.setForeground(new Color(255,255,255));
 
         frame.add(tickerText);
         frame.add(amountFundedText);
         frame.add(listedPriceText);
         frame.add(percentageText);
         frame.add(currentPriceText);
+        frame.add(searchText);
+
     }
 
     private void initializeButtonBuy() {
-        JButton buttonBuy = new JButton("Buy");
-        buttonBuy.setBounds(25, 400, 100, 30);
+        JButton buttonBuy = new JButton("BUY");
+        buttonBuy.setFont(new Font("Bold", Font.BOLD, 40));
+        buttonBuy.setBounds(25, 600, 150, 120);
+        buttonBuy.setForeground(new Color(255,255,255));
+        buttonBuy.setBackground(new Color(13, 126, 13));
+        buttonBuy.setBorder(BorderFactory.createLineBorder(new Color(13, 126, 13)));
+        buttonBuy.setOpaque(true);
         frame.add(buttonBuy);
 
         buttonBuy.addActionListener(new ActionListener() {
@@ -162,8 +249,13 @@ public class InvestmentAppGUI {
 
 
     private void initializeButtonSell() {
-        JButton buttonSell = new JButton("Sell");
-        buttonSell.setBounds(25, 450, 100, 30);
+        JButton buttonSell = new JButton("SELL");
+        buttonSell.setFont(new Font("Bold", Font.BOLD, 40));
+        buttonSell.setBounds(525, 600, 150, 120);
+        buttonSell.setForeground(new Color(255,255,255));
+        buttonSell.setBackground(new Color(171, 24, 24));
+        buttonSell.setBorder(BorderFactory.createLineBorder(new Color(171, 24, 24)));
+        buttonSell.setOpaque(true);
         frame.add(buttonSell);
 
         buttonSell.addActionListener(new ActionListener() {
@@ -172,6 +264,7 @@ public class InvestmentAppGUI {
                 if (table.getSelectedRow() >= 0) {
                     int i = table.getSelectedRow();
                     editUserInvestment(i);
+                    clearUserInvestment();
                 }
             }
         });
@@ -179,7 +272,12 @@ public class InvestmentAppGUI {
 
     private void initializeButtonSave() {
         JButton buttonSave = new JButton("Save");
-        buttonSave.setBounds(150, 400, 100, 30);
+        buttonSave.setBounds(65, 75, 150, 80);
+        buttonSave.setForeground(new Color(255,255,255));
+        buttonSave.setFont(new Font("Bold", Font.PLAIN, 40));
+        buttonSave.setBackground(new Color(93, 16, 73));
+        buttonSave.setBorder(BorderFactory.createLineBorder(new Color(93, 16, 73)));
+        buttonSave.setOpaque(true);
         frame.add(buttonSave);
 
         buttonSave.addActionListener(new ActionListener() {
@@ -198,7 +296,12 @@ public class InvestmentAppGUI {
 
     private void initializeButtonLoad() {
         JButton buttonLoad = new JButton("Load");
-        buttonLoad.setBounds(150, 450, 100, 30);
+        buttonLoad.setBounds(65, 165, 150, 80);
+        buttonLoad.setBackground(new Color(93, 16, 73));
+        buttonLoad.setForeground(new Color(255,255,255));
+        buttonLoad.setFont(new Font("Bold", Font.PLAIN, 40));
+        buttonLoad.setBorder(BorderFactory.createLineBorder(new Color(93, 16, 73)));
+
         frame.add(buttonLoad);
 
         buttonLoad.addActionListener(new ActionListener() {
@@ -207,6 +310,11 @@ public class InvestmentAppGUI {
                 loadPortfolio();
             }
         });
+    }
+
+    private void initializeButtonSearch() {
+
+
     }
 
     private void loadPortfolio() {
@@ -218,11 +326,11 @@ public class InvestmentAppGUI {
                     Invest invest = invests.get(j);
                     Object[] row = new Object[7];
                     row[0] = invest.getName();
-                    row[1] = invest.getAmountFunded();
-                    row[2] = invest.getListPrice();
+                    row[1] = invest.getListPrice();
+                    row[2] = invest.getAmountFunded();
                     row[3] = invest.getNumberShares();
-                    row[4] = invest.getProfit();
-                    row[5] = invest.getBalance();
+                    row[4] = invest.getBalance();
+                    row[5] = invest.getProfit();
                     row[6] = invest.getRealizedGains();
 
                     tableModel.addRow(row);
@@ -234,63 +342,41 @@ public class InvestmentAppGUI {
     }
 
     private void editUserInvestment(int i) {
-        final Double numShares = (Double) tableModel.getValueAt(i,3);
+        final Double numShares = (Double) tableModel.getValueAt(i, 3);
         Double numSharesUpdate = (Double.parseDouble(percentage.getText()) * numShares) / 100;
         Double numSharesRemain = numShares - numSharesUpdate;
-        tableModel.setValueAt(numSharesRemain, i,3);
+        final Double realizedGains = (Double) tableModel.getValueAt(i, 6);
 
+        tableModel.setValueAt(numSharesRemain, i, 3);
         Double realizedGainsUpdate = (Double.parseDouble(currentPrice.getText()) * numSharesUpdate);
-        tableModel.setValueAt(realizedGainsUpdate,i,6);
+        tableModel.setValueAt(realizedGainsUpdate, i, 6);
 
-        Double balanceUpdate = (numSharesRemain * (Double) tableModel.getValueAt(i, 2))
-                               + realizedGainsUpdate;
-        tableModel.setValueAt(balanceUpdate, i, 5);
+        Double balanceUpdate = realizedGainsUpdate
+                + (numSharesRemain * (Double.parseDouble((String) tableModel.getValueAt(i, 1))) + realizedGains);
+        tableModel.setValueAt(balanceUpdate, i, 4);
 
+        Double profitUpdate = (balanceUpdate - Double.parseDouble((String) tableModel.getValueAt(i, 2)));
+        tableModel.setValueAt(profitUpdate, i, 5);
+
+//        String name = (String) tableModel.getValueAt(i, 0);
+//        Double crntPrice = Double.parseDouble(currentPrice.getText());
+//        Double pct = Double.parseDouble(percentage.getText());
 
     }
 
-//
-//                    Double numShares = (Double) tableModel.getValueAt(i, 3);
-//
-//
-//                    Double numSharesUpdate = (Double.parseDouble(percentage.getText()) * numShares) / 100;
-//                    Double numSharesRemain = (numSharesUpdate * 100) / (Double.parseDouble(percentage.getText()))
-//                            - numSharesUpdate; // INCORRECT
-//                    tableModel.setValueAt(numSharesUpdate, i, 3);
-//                    Double realizedGainsUpdate = (Double.parseDouble(currentPrice.getText()) * numSharesUpdate);
-//                    tableModel.setValueAt(realizedGainsUpdate, i, 6);
-//
-//                    Double balanceUpdate = (numSharesRemain * (Double) tableModel.getValueAt(i, 2))
-//                            + realizedGainsUpdate;
-//                    tableModel.setValueAt(balanceUpdate, i, 5);
-//                    Double profitUpdate = balanceUpdate - (Double) tableModel.getValueAt(i, 1);
-//                    tableModel.setValueAt(profitUpdate, i, 4);
-//                }
-//            }
-//        });
-//    }
+
 
     private void addUserInvestment() {
 
         Object [] row = new Object[7];
-        row[0] = ticker.getText().toUpperCase();
-        row[1] = amountFunded.getText();
-        row[2] = listedPrice.getText();
+        row[0] = ticker.getText().toUpperCase(); // name
+        row[1] = listedPrice.getText();// listedprice
+        row[2] = amountFunded.getText(); // amountfunded
         row[3] = (Double.parseDouble(amountFunded.getText()) / Double.parseDouble(listedPrice.getText())); // num shares
-        row[4] = 0.0; // profit
-        row[5] = amountFunded.getText(); // balance
-        row[6] = 0.0;
+        row[4] = amountFunded.getText(); //balance
+        row[5] = 0.0; // profit
+        row[6] = 0.0; // realized gains
 
-//        Invest addInvest = new Invest(
-//                row[0].toString(),
-//                parseDouble(row[1].toString()),
-//                parseDouble(row[2].toString()),
-//                parseDouble(row[3].toString()),
-//                parseDouble(row[4].toString()),
-//                parseDouble(row[5].toString()),
-//                parseDouble(row[6].toString()));
-//
-//        // i need to add the invest to the portfolio
         portfolio.addToPortfolio(row[0].toString(),
                 parseDouble(row[1].toString()),
                 parseDouble(row[2].toString()),
@@ -300,7 +386,6 @@ public class InvestmentAppGUI {
                 parseDouble(row[6].toString()));
 
         tableModel.addRow(row);
-
     }
 
     // MODIFIES: this
@@ -309,6 +394,8 @@ public class InvestmentAppGUI {
         ticker.setText("");
         amountFunded.setText("");
         listedPrice.setText("");
+        percentage.setText("");
+        currentPrice.setText("");
     }
 
 }

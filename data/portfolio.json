@@ -1,12 +1,32 @@
 {"Portfolio": [{
     "name": "TESLA",
-    "investments": [{
-        "numberShares": 5,
-        "balance": 0,
-        "realizedGains": 0,
-        "amountFunded": 100,
-        "name": "TESLA",
-        "listedPrice": 500,
-        "profit": 500
-    }]
+    "investments": [
+        {
+            "numberShares": 2,
+            "balance": 500,
+            "realizedGains": 0,
+            "amountFunded": 500,
+            "name": "TESLA",
+            "listedPrice": 250,
+            "profit": 0
+        },
+        {
+            "numberShares": 2,
+            "balance": 500,
+            "realizedGains": 0,
+            "amountFunded": 500,
+            "name": "TESLA",
+            "listedPrice": 250,
+            "profit": 0
+        },
+        {
+            "numberShares": 2,
+            "balance": 500,
+            "realizedGains": 0,
+            "amountFunded": 500,
+            "name": "TESLA",
+            "listedPrice": 250,
+            "profit": 0
+        }
+    ]
 }]}
