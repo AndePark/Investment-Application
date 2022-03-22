@@ -62,6 +62,17 @@ public class Portfolio implements Writable {
         }
     }
 
+
+    public void addToPortfolio(Invest investment) {
+        if (portfolio.containsKey(investment.getName())) {
+            portfolio.get(investment.getName()).add(investment);
+        } else {
+            ArrayList<Invest> investments = new ArrayList<>();
+            investments.add(investment);
+            portfolio.put(investment.getName(), investments);
+        }
+    }
+
     //REQUIRES: name must be in Portfolio && index must be associated to an investment in the list
     //MODIFIES: this, Invest
     //EFFECTS: chosen investment (via index) in the list of investments associated with given stock ticker name is sold

@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static java.lang.Double.parseDouble;
 
@@ -32,6 +33,9 @@ public class InvestmentAppGUI {
             "# of Shares", "Balance", "Profit", "Realized Gains"};
     private static final String JSON_STORE = "./data/portfolio.json";
 
+    private HashMap<Integer, Invest> indexMap;
+
+    // hasmap idtoinv<int, Inv>
     private JFrame frame;
     private JFrame frame2;
     private JPanel introPanel;
@@ -46,18 +50,20 @@ public class InvestmentAppGUI {
     private Portfolio portfolio;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
-    private JLabel tickerText;
-    private JLabel amountFundedText;
-    private JLabel listedPriceText;
-    private JLabel percentageText;
-    private JLabel currentPriceText;
-    private JLabel searchText;
+    private JLabel tickerText = new JLabel("Ticker");
+    private JLabel amountFundedText = new JLabel("Amount Funded");
+    private JLabel listedPriceText = new JLabel("Listed Price");
+    private JLabel percentageText = new JLabel("% to Sell");
+    private JLabel currentPriceText = new JLabel("Current Listed Price");
+    private JLabel searchText = new JLabel("Search by Name");
     private Timer introTimer;
 
 
 
 
+
     public InvestmentAppGUI() {
+        this.indexMap = new HashMap<>();
         runIntroGUI();
         introTimer = new Timer(1500, e -> {
             frame2.setVisible(false);
@@ -100,6 +106,8 @@ public class InvestmentAppGUI {
         frame2.setLocationRelativeTo(null);
         frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame2.setVisible(true);
+//        frame2.setUndecorated(true);
+
     }
 
     private void runGUI() {
@@ -125,6 +133,7 @@ public class InvestmentAppGUI {
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
+
     }
 
     private void initializeTable() {
@@ -194,12 +203,6 @@ public class InvestmentAppGUI {
     }
 
     private void initializeJLabels() {
-        tickerText = new JLabel("Ticker");
-        amountFundedText = new JLabel("Amount Funded");
-        listedPriceText = new JLabel("Listed Price");
-        percentageText = new JLabel("% to Sell");
-        currentPriceText = new JLabel("Current Listed Price");
-        searchText = new JLabel("Search by Name");
 
         tickerText.setBounds(205, 580, 150, 20);
         tickerText.setForeground(new Color(255,255,255));
@@ -284,6 +287,15 @@ public class InvestmentAppGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+//                    System.out.println("tesla");
+//                    System.out.println(portfolio.isEmpty());
+//                    for(Invest i: portfolio.getInvestments("TESLA")){
+//                        System.out.println(i.getBalance());
+//                    }
+//                    System.out.println("apple");
+//                    for(Invest i: portfolio.getInvestments("APPLE")){
+//                        System.out.println(i.getBalance());
+//                    }
                     jsonWriter.open();
                     jsonWriter.write(portfolio);
                     jsonWriter.close();
@@ -320,6 +332,8 @@ public class InvestmentAppGUI {
     private void loadPortfolio() {
         try {
             portfolio = jsonReader.read();
+            tableModel.setRowCount(0);
+            indexMap = new HashMap<>();
             for (String name : portfolio.keySet()) {
                 ArrayList<Invest> invests = portfolio.getInvestments(name);
                 for (int j = 0; j < invests.size(); j++) {
@@ -334,6 +348,7 @@ public class InvestmentAppGUI {
                     row[6] = invest.getRealizedGains();
 
                     tableModel.addRow(row);
+                    indexMap.put(j, invest);
                 }
             }
         } catch (IOException e) {
@@ -358,10 +373,9 @@ public class InvestmentAppGUI {
         Double profitUpdate = (balanceUpdate - Double.parseDouble((String) tableModel.getValueAt(i, 2)));
         tableModel.setValueAt(profitUpdate, i, 5);
 
-//        String name = (String) tableModel.getValueAt(i, 0);
-//        Double crntPrice = Double.parseDouble(currentPrice.getText());
-//        Double pct = Double.parseDouble(percentage.getText());
-
+        Invest currentInvestment = this.indexMap.get(i);
+        currentInvestment.sell(Double.parseDouble(currentPrice.getText()),
+                Double.parseDouble(percentage.getText()));
     }
 
 
@@ -377,15 +391,27 @@ public class InvestmentAppGUI {
         row[5] = 0.0; // profit
         row[6] = 0.0; // realized gains
 
-        portfolio.addToPortfolio(row[0].toString(),
+        Invest invest = new Invest(row[0].toString(),
                 parseDouble(row[1].toString()),
                 parseDouble(row[2].toString()),
                 parseDouble(row[3].toString()),
                 parseDouble(row[4].toString()),
                 parseDouble(row[5].toString()),
-                parseDouble(row[6].toString()));
+                parseDouble(row[6].toString())
+        );
 
+//        portfolio.addToPortfolio(row[0].toString(),
+//                parseDouble(row[1].toString()),
+//                parseDouble(row[2].toString()),
+//                parseDouble(row[3].toString()),
+//                parseDouble(row[4].toString()),
+//                parseDouble(row[5].toString()),
+//                parseDouble(row[6].toString()));
+
+        portfolio.addToPortfolio(invest);
         tableModel.addRow(row);
+        indexMap.put(tableModel.getRowCount() - 1, invest);
+
     }
 
     // MODIFIES: this
