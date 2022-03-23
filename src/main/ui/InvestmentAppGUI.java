@@ -11,11 +11,11 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.TableRowSorter;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -34,8 +34,6 @@ public class InvestmentAppGUI {
     private static final String JSON_STORE = "./data/portfolio.json";
 
     private HashMap<Integer, Invest> indexMap;
-
-    // hasmap idtoinv<int, Inv>
     private JFrame frame;
     private JFrame frame2;
     private JPanel introPanel;
@@ -410,8 +408,8 @@ public class InvestmentAppGUI {
 
         portfolio.addToPortfolio(invest);
         tableModel.addRow(row);
-        indexMap.put(tableModel.getRowCount() - 1, invest);
-
+        indexMap.put(tableModel.getRowCount(), invest);
+        // should we subtract 1 here?
     }
 
     // MODIFIES: this
