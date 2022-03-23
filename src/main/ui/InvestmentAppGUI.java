@@ -340,12 +340,13 @@ public class InvestmentAppGUI {
                     Invest invest = invests.get(j);
                     Object[] row = new Object[7];
                     row[0] = invest.getName();
-                    row[1] = invest.getListPrice();
-                    row[2] = invest.getAmountFunded();
+                    row[1] = Double.toString(invest.getListPrice());
+                    row[2] = Double.toString(invest.getAmountFunded());
                     row[3] = invest.getNumberShares();
-                    row[4] = invest.getBalance();
+                    row[4] = Double.toString(invest.getBalance());
                     row[5] = invest.getProfit();
                     row[6] = invest.getRealizedGains();
+                    // when i load it aren't they all objects as well
 
                     tableModel.addRow(row);
                     indexMap.put(j, invest);
@@ -378,8 +379,6 @@ public class InvestmentAppGUI {
                 Double.parseDouble(percentage.getText()));
     }
 
-
-
     private void addUserInvestment() {
 
         Object [] row = new Object[7];
@@ -399,6 +398,7 @@ public class InvestmentAppGUI {
                 parseDouble(row[5].toString()),
                 parseDouble(row[6].toString())
         );
+
 
 //        portfolio.addToPortfolio(row[0].toString(),
 //                parseDouble(row[1].toString()),

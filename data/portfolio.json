@@ -24,13 +24,13 @@
                 "profit": 0
             },
             {
-                "numberShares": 6,
-                "balance": 600,
-                "realizedGains": 0,
+                "numberShares": 0.75,
+                "balance": 2700,
+                "realizedGains": 2625,
                 "amountFunded": 600,
                 "name": "TESLA",
                 "listedPrice": 100,
-                "profit": 0
+                "profit": 2100
             }
         ]
     }
