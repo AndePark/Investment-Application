@@ -81,6 +81,8 @@ public class Portfolio implements Writable {
         portfolio.get(name).get(index).sell(currentPrice, percentage);
     }
 
+
+
     //REQUIRES: stock ticker name must be in portfolio
     //EFFECTS: returns the list of investments for the given stock ticker name
     public ArrayList<Invest> getInvestments(String name) {

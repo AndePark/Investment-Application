@@ -2,25 +2,36 @@
     {
         "name": "APPLE",
         "investments": [{
-            "numberShares": 6,
-            "balance": 600,
+            "numberShares": 1,
+            "balance": 200,
             "realizedGains": 0,
-            "amountFunded": 600,
+            "amountFunded": 200,
             "name": "APPLE",
-            "listedPrice": 100,
+            "listedPrice": 200,
             "profit": 0
         }]
     },
     {
         "name": "TESLA",
-        "investments": [{
-            "numberShares": 1.25,
-            "balance": 500,
-            "realizedGains": 250,
-            "amountFunded": 500,
-            "name": "TESLA",
-            "listedPrice": 200,
-            "profit": 0
-        }]
+        "investments": [
+            {
+                "numberShares": 0.5,
+                "balance": 150,
+                "realizedGains": 100,
+                "amountFunded": 100,
+                "name": "TESLA",
+                "listedPrice": 100,
+                "profit": 50
+            },
+            {
+                "numberShares": 0.35,
+                "balance": 315,
+                "realizedGains": 105,
+                "amountFunded": 300,
+                "name": "TESLA",
+                "listedPrice": 600,
+                "profit": 15
+            }
+        ]
     }
 ]}
