@@ -46,7 +46,7 @@ import static java.lang.Double.parseDouble;
 // Investment application GUI
 public class InvestmentAppGUI {
     private static final int FRAME_WIDTH = 1000;
-    private static final int FRAME_HEIGHT = 950;
+    private static final int FRAME_HEIGHT = 740;
     private static final String[] COLUMNNAMES = {"Ticker", "Listed Price", "Amount Funded",
             "# of Shares", "Balance", "Profit", "Realized Gains"};
     private static final String JSON_STORE = "./data/portfolio.json";
@@ -129,6 +129,7 @@ public class InvestmentAppGUI {
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
 
+
         initMainFrame();
 
         initializeInvestTextField();
@@ -182,7 +183,7 @@ public class InvestmentAppGUI {
 
         JScrollPane pane = new JScrollPane(table);
         table.setFillsViewportHeight(true);
-        pane.setBounds(100, 25, 800, 525);
+        pane.setBounds(100, 25, 800, 300);
         frame.add(pane);
     }
 
@@ -209,11 +210,11 @@ public class InvestmentAppGUI {
         percentage = new JTextField();
         currentPrice = new JTextField();
 
-        ticker.setBounds(200, 600, 150, 20);
-        amountFunded.setBounds(200, 650, 150, 20);
-        listedPrice.setBounds(200, 700, 150, 20);
-        percentage.setBounds(700, 600, 150, 20);
-        currentPrice.setBounds(700, 700, 150, 20);
+        ticker.setBounds(200, 400, 150, 20);
+        amountFunded.setBounds(200, 450, 150, 20);
+        listedPrice.setBounds(200, 500, 150, 20);
+        percentage.setBounds(700, 400, 150, 20);
+        currentPrice.setBounds(700, 500, 150, 20);
 
         frame.add(ticker);
         frame.add(amountFunded);
@@ -225,19 +226,19 @@ public class InvestmentAppGUI {
     // MODIFIES: this
     // EFFECTS: initializes all JLabels then adds them to main JFrame
     private void initJLabel() {
-        tickerText.setBounds(205, 580, 150, 20);
+        tickerText.setBounds(205, 380, 150, 20);
         setTextColour(tickerText);
 
-        amountFundedText.setBounds(205, 630, 150, 20);
+        amountFundedText.setBounds(205, 430, 150, 20);
         setTextColour(amountFundedText);
 
-        listedPriceText.setBounds(205, 680, 150, 20);
+        listedPriceText.setBounds(205, 480, 150, 20);
         setTextColour(listedPriceText);
 
-        percentageText.setBounds(705, 580, 150, 20);
+        percentageText.setBounds(705, 380, 150, 20);
         setTextColour(percentageText);
 
-        currentPriceText.setBounds(705, 680, 150, 20);
+        currentPriceText.setBounds(705, 480, 150, 20);
         setTextColour(currentPriceText);
 
         frame.add(tickerText);
@@ -260,7 +261,7 @@ public class InvestmentAppGUI {
         icon4 = new ImageIcon(scaleImage);
         JButton buttonAbout = new JButton(icon4);
 
-        buttonAbout.setBounds(960, 890, 20, 20);
+        buttonAbout.setBounds(960, 690, 20, 20);
         customizeJButton(buttonAbout);
         buttonAbout.setFont(new Font("Bold", Font.PLAIN, 10));
 
@@ -285,7 +286,7 @@ public class InvestmentAppGUI {
     //          pop-up panel notifying user that input is invalid
     private void initButtonBuy() {
         JButton buttonBuy = new JButton("BUY");
-        buttonBuy.setBounds(25, 600, 150, 120);
+        buttonBuy.setBounds(25, 400, 150, 120);
         customizeJButton(buttonBuy);
 
         frame.add(buttonBuy);
@@ -308,7 +309,7 @@ public class InvestmentAppGUI {
     //          displays pop-up notifying user that input/selection is invalid
     private void initButtonSell() {
         JButton buttonSell = new JButton("SELL");
-        buttonSell.setBounds(525, 600, 150, 120);
+        buttonSell.setBounds(525, 400, 150, 120);
         customizeJButton(buttonSell);
 
         frame.add(buttonSell);
@@ -332,7 +333,7 @@ public class InvestmentAppGUI {
     // catches FileNotFoundException and displays new pop-up panel that notifies user that investments have been saved
     private void initButtonSave() {
         JButton buttonSave = new JButton("SAVE");
-        buttonSave.setBounds(50, 800, 180, 80);
+        buttonSave.setBounds(50, 600, 180, 80);
         customizeJButton(buttonSave);
 
         frame.add(buttonSave);
@@ -358,7 +359,7 @@ public class InvestmentAppGUI {
     // EFFECTS: initializes load JButton, adds them to main frame, writes investments from JSON_STORE to JTable
     private void initButtonLoad() {
         JButton buttonLoad = new JButton("LOAD");
-        buttonLoad.setBounds(400, 800, 180, 80);
+        buttonLoad.setBounds(400, 600, 180, 80);
         customizeJButton(buttonLoad);
 
         frame.add(buttonLoad);
@@ -376,7 +377,7 @@ public class InvestmentAppGUI {
     //          another pop-up panel
     private void initButtonProfit() {
         JButton buttonSearch = new JButton("PROFITS");
-        buttonSearch.setBounds(755, 800, 180, 80);
+        buttonSearch.setBounds(755, 600, 180, 80);
         customizeJButton(buttonSearch);
 
         frame.add(buttonSearch);
