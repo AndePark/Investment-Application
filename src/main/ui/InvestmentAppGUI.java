@@ -80,7 +80,7 @@ public class InvestmentAppGUI {
     public InvestmentAppGUI() {
         this.indexMap = new HashMap<>();
         runIntroGUI();
-        introTimer = new Timer(2000, e -> {
+        introTimer = new Timer(2500, e -> {
             frame2.setVisible(false);
             runGUI();
         });
