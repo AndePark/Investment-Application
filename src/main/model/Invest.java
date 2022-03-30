@@ -57,6 +57,9 @@ public class Invest implements Writable  {
         numberShares -= (numberShares * (percentage / 100));
         balance = (numberShares * listedPrice) + realizedGains;
         profit = balance - amountFunded;
+
+        EventLog.getInstance().logEvent(new Event(numberShares + " shares of " + name + " purchased at "
+                + listedPrice + " remains in your portfolio"));
     }
 
     public String getName() {

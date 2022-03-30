@@ -40,3 +40,35 @@ finds it difficult to stay organized (like myself), this application helps with 
 - As a user, I want to be able to load all my purchased investments in my portfolio from file 
 
 
+## Phase 4: Task 2
+The following is a representative sample of the events that should be logged after **purchasing** investments
+
+- Wed Mar 30 13:02:25 PDT 2022 
+
+4.0 shares of TESLA purchased at 100.0 has been added to your portfolio
+
+- Wed Mar 30 13:02:30 PDT 2022
+
+2.5 shares of TESLA purchased at 200.0 has been added to your portfolio
+
+- Wed Mar 30 13:02:35 PDT 2022
+
+3.0 shares of APPLE purchased at 200.0 has been added to your portfolio
+
+- Wed Mar 30 13:02:41 PDT 2022
+
+7.0 shares of AMC purchased at 100.0 has been added to your portfolio
+
+
+The following is a representative sample of the events that should be logged after **selling** investments
+
+- Wed Mar 30 13:02:54 PDT 2022
+
+1.5 shares of APPLE purchased at 200.0 remains in your portfolio
+
+- Wed Mar 30 13:03:11 PDT 2022
+
+2.8 shares of TESLA purchased at 100.0 remains in your portfolio
+
+
+Process finished with exit code 0

@@ -1,5 +1,7 @@
 package ui;
 
+import model.Event;
+import model.EventLog;
 import model.Invest;
 import model.Portfolio;
 import persistence.JsonReader;
@@ -9,10 +11,10 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.xml.bind.SchemaOutputResolver;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -74,6 +76,7 @@ public class InvestmentAppGUI {
     private ImageIcon icon1;
     private ImageIcon icon2;
     private ImageIcon icon3;
+
 
 
     // EFFECTS: constructs and runs intro pop-up GUI then subsequently runs main investment app GUI
@@ -154,9 +157,23 @@ public class InvestmentAppGUI {
         frame.setTitle("Investment Portfolio");
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameCloseEvent();
     }
+
+    private void frameCloseEvent() {
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                for (Event event : EventLog.getInstance()) {
+                    System.out.println(event.toString() + "\n");
+                }
+            }
+        });
+    }
+
+
+
 
     // MODIFIES: this
     // EFFECTS: initializes table elements (JTable, DefaultTableModel, JScrollPane) then adds them to main GUI frame

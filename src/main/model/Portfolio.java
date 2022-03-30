@@ -60,6 +60,8 @@ public class Portfolio implements Writable {
             investments.add(new Invest(name, listedPrice, amountFunded, numShares, balance, profit, realizedGains));
             portfolio.put(name, investments);
         }
+        EventLog.getInstance().logEvent(new Event(numShares + " shares of "
+                + name + " purchased at " + listedPrice + " has been added to your portfolio"));
     }
 
 
@@ -71,6 +73,9 @@ public class Portfolio implements Writable {
             investments.add(investment);
             portfolio.put(investment.getName(), investments);
         }
+        EventLog.getInstance().logEvent(new Event(investment.getNumberShares() + " shares of "
+                + investment.getName() + " purchased at " + investment.getListPrice()
+                + " has been added to your portfolio"));
     }
 
     //REQUIRES: name must be in Portfolio && index must be associated to an investment in the list
