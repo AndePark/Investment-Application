@@ -22,7 +22,6 @@ public class Portfolio implements Writable {
     //         for that specific stock ticker
     public Portfolio() {
         portfolio = new HashMap<>();
-
     }
 
     //REQUIRES: listedPrice > 0.0 && amountFunded > 0.0

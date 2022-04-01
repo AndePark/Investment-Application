@@ -78,6 +78,9 @@ later down the road. With that said, the following are some improvements that I 
               in turn would make the single-responsibility aspect more fulfilling. 
 - **SECOND** : I would use constants more throughout my project. This would give me the opportunity to quickly change 
                certain aspects (ie. placement of buttons on JFrame) from a single point. This relays back to  
-               single-point of control that I should have realized when developing my InvestmentAppGUI class 
-
+               single-point of control that I should have realized when developing my InvestmentAppGUI class
+- **THIRD** : I would like to use exceptions throughout my project. I think I had planned on doing this after we 
+              were introduced to the concept, but at the time, I really didn't understand the exact purpose for using 
+              exceptions. Now that I understand how they are used and their purpose, using exceptions will be an improvement
+              that I can implement to the code. 
 
