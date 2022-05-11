@@ -1,0 +1,12 @@
+{"Portfolio": [{
+    "name": "TESLA",
+    "investments": [{
+        "numberShares": 3,
+        "balance": 300,
+        "realizedGains": 0,
+        "amountFunded": 300,
+        "name": "TESLA",
+        "listedPrice": 100,
+        "profit": 0
+    }]
+}]}
