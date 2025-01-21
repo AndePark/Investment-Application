@@ -70,17 +70,4 @@ The following is a representative sample of the events that should be logged aft
 
 2.8 shares of TESLA purchased at 100.0 remains in your portfolio
 
-## Phase 4: Task 3
-My overall satisfaction for this project is high. I feel accomplished with what I have done so far and I hope to revisit this project 
-later down the road. With that said, the following are some improvements that I plan to make as we come close to the end of term.  
-- **FIRST** : My InvestmentAppGUI class can use some organization. I think that I could split up some of the functionalities into 
-              separate classes. For instance, the JButtons could be a separate class which would allow for easier navigation. This 
-              in turn would make the single-responsibility aspect more fulfilling. 
-- **SECOND** : I would use constants more throughout my project. This would give me the opportunity to quickly change 
-               certain aspects (ie. placement of buttons on JFrame) from a single point. This relays back to  
-               single-point of control that I should have realized when developing my InvestmentAppGUI class
-- **THIRD** : I would like to use exceptions throughout my project. I think I had planned on doing this after we 
-              were introduced to the concept, but at the time, I really didn't understand the exact purpose for using 
-              exceptions. Now that I understand how they are used and their purpose, using exceptions will be an improvement
-              that I can implement to the code. 
 
